@@ -1,0 +1,21 @@
+{
+  "name": "app",
+  "homepage": "https://github.com/chetanbarot/WDI_LONDON_PROJECT3",
+  "authors": [
+    "tonio155 <tonio155@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "underscore": "^1.8.3"
+  }
+}
