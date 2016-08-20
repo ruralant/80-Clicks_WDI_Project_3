@@ -79,9 +79,13 @@ EmpireApp.loadPage = function(){
 
 EmpireApp.initEventHandlers = function() {
   this.$main = $("main");
+  this.$main.on("submit", "form", this.handleForm);
 
   $(".navbar-nav a").not(".logout").on("click", this.loadPage);
   $(".navbar-nav a.logout").on("click", this.logout);
+  this.$main.on("focus", "form input", function(){
+    $(this).parents('.form-group').removeClass('has-error');
+  })
 
 }
 
