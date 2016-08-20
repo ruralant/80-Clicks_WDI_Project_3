@@ -19,6 +19,24 @@ function register(req, res){
   })
 };
 
+function login(req, res){
+  User.findOne({email: req.body.email}, function(err, user){
+    if(err) res.send(500).json(err);
+    if(!user || !user.validatePassword(req.body.password)){
+      return res.status(401).json({message: "Mmmm..Something went wrong please check your log in details and try again"})
+    }
+
+    var payload = { _id: user._id, username: user.username};
+    var token = jwt.sign(payload, secret, { expiresIn: 60*60*1});
+
+    return res.status(200).json({ 
+      message: "Welcome to Empire you have sucessfully logged in!",
+      token: token
+    });
+  })
+};
+
 module.exports = {
-  register: register
+  register: register,
+  login: login
 };
