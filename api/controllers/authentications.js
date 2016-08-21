@@ -36,7 +36,20 @@ function login(req, res){
   })
 };
 
+function show(req, res){
+  console.log('looking for user')
+  console.log(req.body.email)
+  User.findOne({email: req.body.email}, function(err, user){
+    if(err) return res.status(500).json(err);
+
+    if(!user) return res.status(404).json({message: 'Could not find user'});
+
+    return res.status(200).json(user);
+  });
+}
+
 module.exports = {
   register: register,
-  login: login
+  login: login,
+  show: show
 };

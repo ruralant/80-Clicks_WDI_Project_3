@@ -4,7 +4,10 @@ var bcrypt = require('bcrypt');
 var userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
-  passwordHash: { type: String, required: true }
+  passwordHash: { type: String, required: true },
+  image: { type: String},
+  highestScore: { type: Number},
+  numberOfWins: { type: Number}
 });
 
 userSchema.virtual('password')

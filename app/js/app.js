@@ -18,6 +18,18 @@ EmpireApp.getTemplate = function(template, data) {
   });
 }
 
+EmpireApp.getUser = function() {
+  event.preventDefault();
+  console.log("firing get")
+  return $.ajax({
+    method: "GET",
+    
+    url: EmpireApp.API_URL+"/show"
+  }).done(function(data){
+    EmpireApp.getTemplate("show", {user: data});
+  });
+}
+
 EmpireApp.handleForm = function(){
   event.preventDefault();
   console.log("going to url");
@@ -39,7 +51,7 @@ EmpireApp.handleForm = function(){
     if(!!data.token){
       window.localStorage.setItem("token", data.token);
     }
-
+    EmpireApp.getTemplate("show", {user: data});
   })
 
   .fail(EmpireApp.handleFormErrors);
@@ -54,6 +66,14 @@ EmpireApp.handleFormErrors = function(jqXHR){
    $form.find('button').removeAttr('disabled');
 
  }
+
+
+EmpireApp.logout = function(){
+  event.preventDefault();
+  window.localStorage.clear();
+  alert("thanks for playing");
+  EmpireApp.updateUI();
+}
 
 EmpireApp.updateUI = function() {
   var loggedIn = !!window.localStorage.getItem("token");
@@ -92,7 +112,6 @@ EmpireApp.initEventHandlers = function() {
 EmpireApp.init = function(){
   this.initEventHandlers();
   this.updateUI();
-  console.log("we're off");
   }.bind(EmpireApp);
 
 

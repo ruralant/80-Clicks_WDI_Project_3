@@ -20,8 +20,13 @@ function secureRoute(req, res, next) {
   });
 }
 
+var authController = require('../controllers/authentications');
+
+
 router.post('/register', authController.register); 
 router.post('/login', authController.login);
+router.get('/show', authController.show);
+
 
 
 module.exports = router;
