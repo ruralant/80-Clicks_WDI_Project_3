@@ -1,0 +1,21 @@
+{
+  "name": "userauth",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "chetan barot <chetanbarot@hotmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/chetanbarot/WDI_LONDON_PROJECT3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "underscore": "^1.8.3"
+  }
+}
