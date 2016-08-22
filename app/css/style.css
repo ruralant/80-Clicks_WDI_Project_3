@@ -8,24 +8,35 @@ html, body {
   height: 100%;
 }
 
-.homepage {
+.navbar {
+  margin-bottom: -2px;
+  background-color: #434040;
+  color: #434040;
+  border: none;
+
+}
+
+#homepage {
   text-align: center;
+  width: auto;
+  color: #E0E0E0;
+  background-color: #252525;
 }
 
 #intro {
-  background-image: url(/images/background2.jpg);
+  background-image: url(/public/images/intro.jpeg);
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
   font-family: Helvetica, Arial, sans-serif;
-  color: #d4d4d4;
+  color: black;
   height: 90vh;
   width: 100%;
-  padding: 10em 0 0 0;
+  padding: 12em 0 0 0;
 }
 
 #home_2_column {
-  padding: 2% 15%;
+  padding: 5% 15% 5% 15%;
 }
 
 #home_2_column p {
@@ -37,7 +48,7 @@ html, body {
   color: white;
   font-weight: 300;
   letter-spacing: 1.5px;
-  background-image: url(/images/about_us_background2.jpg);
+  background-image: url(/public/images/aboutus.jpeg);
   background-size: cover;
   background-position: center;
   padding: 5% 10%;
@@ -58,7 +69,7 @@ html, body {
   font-weight: 300;
 }
 
-.devise_forms h3{
+.forms {
   margin-top: 2%;
   font-weight: 300;
 }

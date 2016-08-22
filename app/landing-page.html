@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Empire</title>
+
+  <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/bower_components/underscore/underscore-min.js"></script>
+  <script type="text/javascript" src="./js/app.js"></script>
+  <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Empire</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ><a href="#" data-template="" class="logged-in"> Logged in as <%= user.username %></a></li>
+            <li><a href="#" data-template="login" class="logged-out">Sign In</a></li>
+            <li><a href="#" data-template="register" class="logged-out">Sign Up</a></li>
+            <li><a href="#" class="logout logged-in">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  <main class="container-flat">
+    <div id="homepage">
+      <div id="intro">
+        <div class="centered">
+          <h1>Empire</h1>    
+          <p>Conquer the world, one state at a time!</p>
+            <a href="#" data-template="" class="logged-in">"Register"</a>
+            <a href="#" data-template="" class="logged-in">"Play!"</a>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6" id="home_2_column">
+          <img src="/public/images/tank-white.png" alt="tank icon">
+          <p>Build your army, fight your enemies and conquer the world!</p>
+        </div>
+        <div class="col-md-6" id="home_2_column">
+          <img src="/public/images/rpg-white.png" alt="rpg icon">
+          <p>Play against other players and climb the word's raking. Became the new Emperor!</p>
+        </div>
+      </div>
+
+      <p id="about_us">
+      Empire is a strategic game where two player battle for the world's supremacy...
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      </p>
+
+      <div class="row">
+        <h4>The Game Board</h4>
+        <div class="col-md-4" id="home_3_column">
+          <img src="/public/images/map-example.png" alt="game board screenshot" class="img-circle">
+          <p>Your Army</p>
+        </div>
+        <div class="col-md-4" id="home_3_column">
+          <img src="/public/images/map-example.png" alt="army screenshot" class="img-circle">
+          <p>Factions</p>    
+        </div>
+        <div class="col-md-4" id="home_3_column">
+          <img src="/public/images/map-example.png" alt="leaderboard screenshot" class="img-circle">
+          <p>LeaderBoard</p>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-4">
+          About Us
+        </div>
+        <div class="col-md-4">
+          <ul>
+            <li>Support</li>
+            <li>Terms</li>
+            <li>Privacy</li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <ul>
+            <li>Facebook</li>
+            <li>Twitter</li>
+            <li>Instagram</li>
+            <li>Pinterest</li>
+            <li>Google+</li>
+          </ul>
+        </div>
+      </div>
+  </main>
+</body>
+</html>
