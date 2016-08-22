@@ -1,0 +1,54 @@
+.homepage {
+  text-align: center;
+}
+
+#intro {
+  background-image: url(/images/background2.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  font-family: Helvetica, Arial, sans-serif;
+  color: #d4d4d4;
+  height: 90vh;
+  width: 100%;
+  padding: 10em 0 0 0;
+}
+
+#home_2_column {
+  padding: 2% 15%;
+}
+
+#home_2_column p {
+  margin-top: 5%;
+}
+
+#about_us {
+  font-size: 1.2em;
+  color: white;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+  background-image: url(/images/about_us_background2.jpg);
+  background-size: cover;
+  background-position: center;
+  padding: 5% 10%;
+}
+
+#home_3_column img {
+  margin: 5% auto;
+  width: 30%
+}
+.centered h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  font-family: 'Raleway', sans-serif;
+}
+
+.centered p {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+.devise_forms h3{
+  margin-top: 2%;
+  font-weight: 300;
+}
