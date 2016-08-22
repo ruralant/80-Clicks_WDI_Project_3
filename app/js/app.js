@@ -51,7 +51,7 @@ EmpireApp.handleForm = function(){
     if(!!data.token){
       window.localStorage.setItem("token", data.token);
     }
-    EmpireApp.getTemplate("show", {user: data});
+    EmpireApp.getTemplate("gameboard", {user: data});
   })
 
   .fail(EmpireApp.handleFormErrors);

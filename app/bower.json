@@ -1,12 +1,12 @@
 {
-  "name": "app",
-  "homepage": "https://github.com/chetanbarot/WDI_LONDON_PROJECT3",
-  "authors": [
-    "tonio155 <tonio155@gmail.com>"
-  ],
+  "name": "userauth",
   "description": "",
-  "main": "",
-  "license": "MIT",
+  "main": "app.js",
+  "authors": [
+    "chetan barot <chetanbarot@hotmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/chetanbarot/WDI_LONDON_PROJECT3",
   "ignore": [
     "**/.*",
     "node_modules",
