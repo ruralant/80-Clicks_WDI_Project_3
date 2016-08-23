@@ -262,7 +262,7 @@ gMaps.createNeighbourMarkers = function(marker) {
       var infowindow = new google.maps.InfoWindow({
                 content: contentString
               });
-
+      pinImage = gMaps.setPinImage("cb65cb");
       var marker = new google.maps.Marker({
         position: location,
         map: gMaps.map,
