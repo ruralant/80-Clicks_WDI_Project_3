@@ -168,7 +168,9 @@ gMaps.geocoder = new google.maps.Geocoder();
 
 gMaps.map = new google.maps.Map(document.getElementById('map'), {
   center: gMaps.initialCenterPoint,
-  zoom: 5
+  zoom: 3,
+  maxZoom: 5,
+  minZoom:2
 });
 
 
@@ -239,11 +241,16 @@ gMaps.createNeighbourMarkers = function(marker) {
   var questionNeighbour = (neighbours[questionCountry]);
   console.log(questionNeighbour);
 
-  function displayFlag(){
+  function displayFlag(questionNeighbour){
     // "/images/svg/" + questionNeighbour.countryCode.toLowerCase() + ".svg"
-  var flag = getElementById('flag-box')
-   flag.textContent = questionNeighbour.countryCode;
-    }   
+    var flag = document.getElementById('flag-box');
+    flag.innerHTML = "<img src='"+"/images/svg/" + questionNeighbour.countryCode.toLowerCase() + ".svg' alt= 'flag image'>";
+    var capital = document.getElementById('capital');
+    capital.textContent = questionNeighbour.capital;
+   console.log(questionNeighbour.countryCode, questionNeighbour.capital, flag);
+    }  
+
+    displayFlag(questionNeighbour); 
 
   neighbours.forEach(function(data) {
     gMaps.geocoder.geocode({ address: data.name }, function(results, status) {
@@ -263,6 +270,8 @@ gMaps.createNeighbourMarkers = function(marker) {
                 content: contentString
               });
 
+      pinImage = gMaps.setPinImage('cb65cb');
+
       var marker = new google.maps.Marker({
         position: location,
         map: gMaps.map,
@@ -281,9 +290,15 @@ gMaps.createNeighbourMarkers = function(marker) {
         });
 
         marker.addListener('click', function() {
-            var player = gMaps.players[gMaps.playerIndex];
-            player.countryMarkers.push(this);
-            this.setIcon 
+            
+            console.log(this.id);
+            if (this.id ===  questionNeighbour.countryCode){
+                console.log('you win');
+            }
+            else {
+             console.log('you loose');
+            }
+            this.setPinImage
             google.maps.event.clearListeners(this, 'click');   
         });
       });
