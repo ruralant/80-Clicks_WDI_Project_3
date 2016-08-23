@@ -113,6 +113,43 @@ gMaps.alpha3CodeConverter = function(alpha3Code) {
   }
 }
 
+gMaps.checkBorders = function(country) {
+  excpetions = {
+    GB: ["FRA", "BEL", "NLD", "ISL"],
+    FR: ["GBR"],
+    BE: ["GBR"],
+    ND: ["GBR"],
+    IS: ["GBR","CAN", "NOR"],
+    CA: ["ISL"],
+    NO: ["ISL"],
+    US: ["RUS", "JPN"],
+    RU: ["JPN", "USA"], 
+    JP: ["USA", "RUS", "PRK", "KOR"],
+    KP: ["JPN"],
+    KR: ["JPN"],
+    CY: ["LI", "TUR", "LBN"],
+    IL: ["CYP"],
+    TR: ["CYP"],
+    LB: ["CYP"],
+    AO: ["BRA"],
+    BR: ["AGO"],
+    CL: ["NZL"],
+    NZ: ["CHL", "AUS"],
+    AU: ["NZL", "PNG", "IDN"],
+    PG: ["AUS"],
+    ID: ["PNG", "AUS", "PHL", "MYS", "SXM"],
+    SX: ["IDN"],
+    PH: ["IDN", "MYS", "VNM"],
+    MY: ["PHL"],
+    VN: ["PHL"]
+  }
+  if(country.alpha2Code in excpetions) {
+    country.borders = country.borders.concat(excpetions[country.alpha2Code]);
+    console.log(country);
+  }
+  return country;
+}
+
 gMaps.startingCountries = [
   // "RU",
   // "US",
@@ -330,5 +367,3 @@ $.get("https://restcountries.eu/rest/v1/all")
 
   gMaps.init();
 });
-
-
