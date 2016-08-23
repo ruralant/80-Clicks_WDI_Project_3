@@ -18,8 +18,6 @@ EmpireApp.getTemplate = function(template, data) {
   });
 }
 
-
-
 EmpireApp.getUser = function() {
   event.preventDefault();
   console.log("firing get")
@@ -69,7 +67,6 @@ EmpireApp.handleFormErrors = function(jqXHR){
 
  }
 
-
 EmpireApp.logout = function(){
   event.preventDefault();
   window.localStorage.clear();
@@ -89,7 +86,6 @@ EmpireApp.updateUI = function() {
   }
 }
 
-
 EmpireApp.loadPage = function(){
   event.preventDefault();
   console.log("page load")
@@ -105,7 +101,6 @@ EmpireApp.initEventHandlers = function() {
   this.$main.on("focus", "form input", function(){
     $(this).parents('.form-group').removeClass('has-error');
   })
-
 }
 
 EmpireApp.init = function(){

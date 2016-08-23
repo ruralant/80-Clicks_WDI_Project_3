@@ -1,7 +1,6 @@
 {
   "name": "userauth",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,5 +20,9 @@
   "devDependencies": {
     "supertest": "^2.0.0",
     "chai": "^3.5.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "description": ""
 }

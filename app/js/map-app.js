@@ -169,10 +169,12 @@ gMaps.geocoder = new google.maps.Geocoder();
 
 gMaps.map = new google.maps.Map(document.getElementById('map'), {
   center: gMaps.initialCenterPoint,
+
   zoom: 3,
   maxZoom: 5,
   minZoom: 2,
   disableDefaultUI: true
+
 });
 
 
@@ -195,6 +197,7 @@ gMaps.getAlpha2Code = function(latLng, callback) {
     }
   });
 }
+
 
 gMaps.createNeighbourMarkers = function(marker) {
   var player = gMaps.players[gMaps.playerIndex];
@@ -242,6 +245,7 @@ gMaps.createNeighbourMarkers = function(marker) {
       marker.addListener('mouseover', function() {
         infowindow.open(map, marker);
       });
+        
           
       marker.addListener('mouseout', function() {
         infowindow.close();
@@ -271,6 +275,7 @@ gMaps.createNeighbourMarkers = function(marker) {
   }); 
 }
 
+// questionNeighbour.capital
 
 gMaps.setupStartingCountry = function() {
 
@@ -306,6 +311,7 @@ gMaps.init = function() {
 
 $.get("https://restcountries.eu/rest/v1/all").done(function(data) {
 
+
   gMaps.cache = data;
 
   gMaps.cache.map(function(country) {
@@ -318,5 +324,4 @@ $.get("https://restcountries.eu/rest/v1/all").done(function(data) {
 
   gMaps.init();
 });
-
 
