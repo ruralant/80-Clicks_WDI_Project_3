@@ -243,8 +243,10 @@ gMaps.createNeighbourMarkers = function(marker) {
 
   function displayFlag(questionNeighbour){
     // "/images/svg/" + questionNeighbour.countryCode.toLowerCase() + ".svg"
-  var flag = document.getElementById('flag-box')
-   // flag.textContent = questionNeighbour.countryCode;
+    var flag = document.getElementById('flag-box');
+    flag.innerHTML = "<img src='"+"/images/svg/" + questionNeighbour.countryCode.toLowerCase() + ".svg' alt= 'flag image'>";
+    var capital = document.getElementById('capital');
+    capital.textContent = questionNeighbour.capital;
    console.log(questionNeighbour.countryCode, questionNeighbour.capital, flag);
     }  
 

@@ -43,8 +43,15 @@ html, body, main {
   height: 50%;
   width: 50%;
 }
+#flag-box img{
+  width:90%;
 
-#captial{
+
+}
+
+
+
+#capital{
   height: 50%;
   width: 50%;
 }
