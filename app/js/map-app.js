@@ -1,4 +1,3 @@
-
 var gMaps = gMaps || {};
 
 gMaps.cache = [];
@@ -170,10 +169,10 @@ gMaps.checkBorders = function(country) {
     BE: ["GBR"],
     ND: ["GBR"],
     IS: ["GBR","CAN", "NOR"],
-    CAN: ["ISL"],
-    NOR: ["ISL"],
+    CA: ["ISL"],
+    NO: ["ISL"],
     US: ["RUS", "JPN"],
-    RUS: ["JPN", "USA"],
+    RU: ["JPN", "USA"], 
     JP: ["USA", "RUS", "PRK", "KOR"],
     KP: ["JPN"],
     KR: ["JPN"],
@@ -181,7 +180,6 @@ gMaps.checkBorders = function(country) {
     IL: ["CYP"],
     TR: ["CYP"],
     LB: ["CYP"],
-    BRAS: ["ANGOLA"],
     AO: ["BRA"],
     BR: ["AGO"],
     CL: ["NZL"],
@@ -190,7 +188,7 @@ gMaps.checkBorders = function(country) {
     PG: ["AUS"],
     ID: ["PNG", "AUS", "PHL", "MYS", "SXM"],
     SX: ["IDN"],
-    PH:  ["IDN", "MYS", "VNM"],
+    PH: ["IDN", "MYS", "VNM"],
     MY: ["PHL"],
     VN: ["PHL"]
   }
@@ -371,4 +369,3 @@ $.get("https://restcountries.eu/rest/v1/all")
 // gMaps.map.addListener('click', function(e) {
 //   gMaps.getCountryData(e.latLng, gMaps.getNeighbours);
 // });
-
