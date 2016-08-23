@@ -1,4 +1,3 @@
-
 var gMaps = gMaps || {};
 
 gMaps.cache = [];
@@ -138,7 +137,7 @@ gMaps.players = [{
 }];
 
 //gMap initial setup (central point, initial zoom level)
-gMaps.initialCenterPoint = { lat: 51.5080072, lng: -0.1019284 };
+gMaps.initialCenterPoint = { lat: 48.210534,  lng: 16.379365, };
 
 gMaps.geocoder = new google.maps.Geocoder();
 
@@ -164,10 +163,6 @@ gMaps.getNeighbours = function(data) {
 
 }
 
-<<<<<<< HEAD
-// get the neighbours country informations (short_name at the moment)
-=======
->>>>>>> development
 gMaps.getCountryData = function(latLng, callback) {
   console.log("country click");
   gMaps.geocoder.geocode({ location: latLng }, function(results, status) {
@@ -185,6 +180,15 @@ gMaps.getCountryData = function(latLng, callback) {
   });
 }
 
+var player = gMaps.players[gMaps.playerIndex];
+var pinColor = player.color;
+var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+  new google.maps.Size(21, 34),
+  new google.maps.Point(0,0),
+  new google.maps.Point(10, 34));
+
+
+
 // gMaps.map.addListener('click', function(e) {
 //   gMaps.getCountryData(e.latLng, gMaps.getNeighbours);
 // });
@@ -197,6 +201,8 @@ gMaps.createNeighbourMarkers = function(marker) {
     return _.findWhere(gMaps.cache, { countryCode: countryCode });
   });
 
+  console.log(neighbours.length);
+
   neighbours.forEach(function(data) {
     gMaps.geocoder.geocode({ address: data.name }, function(results, status) {
       var location = results[0].geometry.location;
@@ -206,7 +212,6 @@ gMaps.createNeighbourMarkers = function(marker) {
             '</div>'+
             '<h1 id="firstHeading" class="firstHeading">'+data.name+'</h1>'+
             '<div id="bodyContent">'+
-            '<p><b>Capital</b>'+data.capital+'</p>'+
             '<p><b>Population</b>'+data.population+'</p>'+
             '<p><b>Area</b>'+data.area+'</p>'+
             '</div>'+
@@ -220,7 +225,7 @@ gMaps.createNeighbourMarkers = function(marker) {
         position: location,
         map: gMaps.map,
         id: data.countryCode,
-        icon: "http://localhost:3000/images/tank-icon/EEC900/" + data.name
+        icon: pinImage
       });
 
 
@@ -232,25 +237,16 @@ gMaps.createNeighbourMarkers = function(marker) {
           infowindow.close();
       });
 
-      // marker.addListener('click', function() {
-      //   var player = gMaps.players[gMaps.playerIndex];
-      //   player.countryMarkers.push(this);
-      //   this.setIcon("http://localhost:3000/images/tank-icon/" + player.color + "/" + data.population);
-      //   google.maps.event.clearListeners(this, 'click');
+      marker.addListener('click', function() {
+        var player = gMaps.players[gMaps.playerIndex];
+        player.countryMarkers.push(this);
+        this.setIcon 
+        google.maps.event.clearListeners(this, 'click');
 
-      //   gMaps.playerIndex += 1;
-      //   if(gMaps.playerIndex >= gMaps.players.length) {
-      //     gMaps.playerIndex = 0;
-      //   }
+     
+      
 
-      //   gMaps.startingCountries = gMaps.startingCountries.filter(function(startingCountryCode) {
-      //     return startingCountryCode !== countryCode 
-      //   });
-
-      //   if(gMaps.startingCountries.length === 0) {
-      //     gMaps.addAttackEvents();
-      //   }
-      // });
+      
 
     });
   })
@@ -270,23 +266,23 @@ gMaps.addAttackEvents = function() {
 gMaps.setupStartingCountry = function() {
   // this.startingCountries.forEach(function(countryCode) {
 
-    // var data = _.findWhere(gMaps.cache, { countryCode: countryCode });
-    var data = gMaps.cache[Math.ceil(Math.random()*gMaps.cache.length+1)]
-
+    var data = _.findWhere(gMaps.cache, { countryCode: 'AT'});
+    
     gMaps.geocoder.geocode({ address: data.name }, function(results, status) {
-      var location = results[0].geometry.location;
+      var location = gMaps.initialCenterPoint;
 
+      
       var marker = new google.maps.Marker({
         position: location,
         map: gMaps.map,
         id: data.countryCode,
-        icon: "http://localhost:3000/images/tank-icon/EEC900/" + data.name
+        icon: pinImage
       });
 
       marker.addListener('click', function() {
         var player = gMaps.players[gMaps.playerIndex];
         player.countryMarkers.push(this);
-        this.setIcon("http://localhost:3000/images/tank-icon/" + player.color + "/" + data.name);
+        this.setIcon(pinImage);
         google.maps.event.clearListeners(this, 'click');
 
         // gMaps.playerIndex += 1;
@@ -328,14 +324,11 @@ $.get("https://restcountries.eu/rest/v1/all")
       };
 
       gMaps.cache.push(country);
-      console.log(country);
+     
 
     });
 
   gMaps.init();
 });
 
-// gMaps.map.addListener('click', function(e) {
-//   gMaps.getCountryData(e.latLng, gMaps.getNeighbours);
-// });
 

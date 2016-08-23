@@ -14,9 +14,12 @@ html, body, main {
 }
 
 .navbar {
+  margin-bottom: -2px;
+  border: none;
   z-index: 100;
   position: relative;
 }
+
 
 #question-box{
   height: 100px;
@@ -33,3 +36,59 @@ html, body, main {
   height: 50%;
   width: 50%;
 }
+
+#homepage {
+  text-align: center;
+  width: auto;
+  z-index: 10;
+}
+
+#intro {
+  background-image: url(/public/images/intro.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  font-family: Helvetica, Arial, sans-serif;
+  color: black;
+  height: 90vh;
+  width: 100%;
+  padding: 12em 0 0 0;
+}
+
+#home_2_column {
+  padding: 5% 15% 5% 15%;
+}
+
+#home_2_column p {
+  margin-top: 5%;
+}
+
+#about_us {
+  font-size: 1.2em;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+  background-image: url(/public/images/travel.jpg);
+  background-size: cover;
+  background-position: center;
+  padding: 10% 20% 10% 5%;
+}
+
+#home_3_column img {
+  margin: 5% auto;
+  width: 30%
+}
+.centered h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  font-family: 'Raleway', sans-serif;
+}
+
+.centered p {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+.forms {
+  margin-top: 2%;
+  font-weight: 300;
+>>>>>>> development
