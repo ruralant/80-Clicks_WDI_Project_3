@@ -18,6 +18,8 @@ EmpireApp.getTemplate = function(template, data) {
   });
 }
 
+
+
 EmpireApp.getUser = function() {
   event.preventDefault();
   console.log("firing get")
