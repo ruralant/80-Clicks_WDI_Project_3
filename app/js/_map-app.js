@@ -217,12 +217,7 @@ gMaps.getCountryData = function(latLng, callback) {
   });
 }
 
-var player = gMaps.players[gMaps.playerIndex];
-var pinColor = player.color;
-var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
-  new google.maps.Size(21, 34),
-  new google.maps.Point(0,0),
-  new google.maps.Point(10, 34));
+
 
 
 
@@ -307,8 +302,6 @@ gMaps.setupStartingCountry = function() {
     
     gMaps.geocoder.geocode({ address: data.name }, function(results, status) {
       var location = gMaps.initialCenterPoint;
-
-      
       var marker = new google.maps.Marker({
         position: location,
         map: gMaps.map,
