@@ -88,9 +88,6 @@ EmpireApp.updateUI = function() {
 }
 
 
-
-
-
 EmpireApp.loadPage = function(){
   event.preventDefault();
   console.log("page load")
@@ -112,7 +109,8 @@ EmpireApp.initEventHandlers = function() {
 EmpireApp.init = function(){
   this.initEventHandlers();
   this.updateUI();
-  }.bind(EmpireApp);
+  this.getTemplate('gameboard');
+}.bind(EmpireApp);
 
 
 $(EmpireApp.init);

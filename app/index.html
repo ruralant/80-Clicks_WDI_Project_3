@@ -2,40 +2,38 @@
 <html>
 <head>
   <title>Empire</title>
-
-  <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="/bower_components/underscore/underscore-min.js"></script>
-  <script type="text/javascript" src="./js/app.js"></script>
   <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="./css/style.css">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
   <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">Empire</a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li ><a href="#" data-template="" class="logged-in"> Logged in as <%= user.username %></a></li>
-            <li><a href="#" data-template="login" class="logged-out">Sign In</a></li>
-            <li><a href="#" data-template="register" class="logged-out">Sign Up</a></li>
-            <li><a href="#" class="logout logged-in">Logout</a></li>
-          </ul>
-        </div>
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Empire</a>
       </div>
-    </nav>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li ><a href="#" data-template="" class="logged-in"> Logged in as <%= user.username %></a></li>
+          <li><a href="#" data-template="login" class="logged-out">Sign In</a></li>
+          <li><a href="#" data-template="register" class="logged-out">Sign Up</a></li>
+          <li><a href="#" class="logout logged-in">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
   <main class="container">
-
     <h1>Javascript disabled!</h1>
-    <p>You need to enable Javascript to view content of this website.<br> Follow this link to find out how... <a href="http://activatejavascript.org/en/instructions/chrome#instructions">How to Activate Javascript</p>
-
+    <p>You need to enable Javascript to view content of this website.<br> Follow this link to find out how... <a href="http://activatejavascript.org/en/instructions/chrome#instructions">How to Activate Javascript</a></p>
   </main>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6p8WX00rsNSX7UUSXoBQ0P9esCDFAZDA"></script>
+  <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/bower_components/underscore/underscore-min.js"></script>
+  <script type="text/javascript" src="/js/app.js"></script>
 </body>
 </html>

@@ -1,9 +1,9 @@
 ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) 
-# Project #3 (Group Project): Empire
+# Project #3 (Group Project): Name of the Project
 
 [image]
 
-##What is Empire:
+##What is ... :
 **Empire** is a strategic game inspired by the board game Risk. It is a multiplayers game where the aim of the players is to conquer the entire word.
 
 #### Here you can see the live version: <https://....herokuapp.com/>
@@ -40,9 +40,13 @@ For creating the name we used the following tools:
 - **MacDown**
 - continue...
 
+##Main Challenges
+One of the min challenge that we had to face was the implementation of **Fusion Layers**, a experimental feature of **Google Maps API**. We tried to add more layers in the same map but we ended switching to Markers instead of Layers. 
+
+
 ##Recordgnised Bugs
 
-coninue...
+continue...
 
 ---
 ##Future Developments

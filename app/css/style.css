@@ -1,4 +1,4 @@
-html, body {
+html, body, main {
   height: 100%;
   padding: 0;
   margin: 0;
@@ -6,25 +6,27 @@ html, body {
 
 #map {
   height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
 .navbar {
   margin-bottom: -2px;
-  background-color: #434040;
-  color: #434040;
   border: none;
-
+  z-index: 100;
+  position: relative;
 }
 
 #homepage {
   text-align: center;
   width: auto;
-  color: #E0E0E0;
-  background-color: #252525;
+  z-index: 10;
 }
 
 #intro {
-  background-image: url(/public/images/intro.jpeg);
+  background-image: url(/public/images/intro.jpg);
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
@@ -45,13 +47,12 @@ html, body {
 
 #about_us {
   font-size: 1.2em;
-  color: white;
   font-weight: 300;
   letter-spacing: 1.5px;
-  background-image: url(/public/images/aboutus.jpeg);
+  background-image: url(/public/images/travel.jpg);
   background-size: cover;
   background-position: center;
-  padding: 5% 10%;
+  padding: 10% 20% 10% 5%;
 }
 
 #home_3_column img {
@@ -72,4 +73,3 @@ html, body {
 .forms {
   margin-top: 2%;
   font-weight: 300;
-}
