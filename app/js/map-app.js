@@ -1,8 +1,6 @@
 var gMaps = gMaps || {};
 
-gMaps.cache = {};
-
-gMaps.call="1";
+gMaps.cache = [];
 
 // convert the alpha3 codes in alpha2 codes slicing the last letter apart for the following exceptions. 
 gMaps.alpha3CodeConverter = function(alpha3Code) {
@@ -116,26 +114,26 @@ gMaps.alpha3CodeConverter = function(alpha3Code) {
 }
 
 gMaps.startingCountries = [
-  "RU",
-  "US",
-  "IN",
-  "CN",
-  "FR",
-  "DE",
-  "BR",
-  "KP",
-  "AO",
-  "AU"
+  // "RU",
+  // "US",
+  // "IN",
+  // "CN",
+  // "FR",
+  // "DE",
+  // "BR",
+  // "KP",
+  // "AO",
+  // "AU"
 ];
 
 gMaps.playerIndex = 0;
 
 gMaps.players = [{
-  color: '#fff000',
-  countries: []
+  color: "D43D1A",
+  countryMarkers: []
 },{
-  color: '#00ff00',
-  countries: []
+  color: "1E41A6",
+  countryMarkers: []
 }];
 
 //gMap initial setup (central point, initial zoom level)
@@ -148,107 +146,194 @@ gMaps.map = new google.maps.Map(document.getElementById('map'), {
   zoom: 3
 });
 
-gMaps.getTablesLayer = function(countryCodes, color) {
-  console.log("layer update called" + gMaps.call);
-  return new google.maps.FusionTablesLayer({
-    query: {
-      select: 'geometry',
-      from: '1N2LBk4JHwWpOY4d9fobIn27lfnZ5MDy-NoqqRpk',
-      where: "ISO_2DIGIT IN ('" + countryCodes.join("','") + "')"
-    },
-    styles: [{
-      polygonOptions: {
-        fillColor: color,
-        fillOpacity: 0.2
-      }
-    }],
-    map: gMaps.map,
-    suppressInfoWindows: true
-  });
-};
-
-// funsion table layer for creating colored layers on the map
-gMaps.startingCountriesLayer = gMaps.getTablesLayer(gMaps.startingCountries, '#00ffff');
-
-// layers customisations
-gMaps.highlightNeighbours = function(neighbours) {
-
-  if(this.tablesLayer){
-    this.tablesLayer.setMap(null);
-  }
-
-  this.tablesLayer = this.getTablesLayer(neighbours, '#0000ff');
-
-  this.tablesLayer.addListener('click', function(e) {
-    gMaps.getCountryData(e.latLng, gMaps.getNeighbours);
-  });
-}
-
-// get the neighbours country
-gMaps.getNeighbours = function(data) {
-  gMaps.highlightNeighbours(data.borders);
-}
-
-// get the neighbours country informations (short_name at the moment)
-gMaps.getCountryData = function(latLng, callback) {
+gMaps.getCountryCode = function(latLng, callback) {
   gMaps.geocoder.geocode({ location: latLng }, function(results, status) {
     if(status === "OK") {
-      var countryCode = results[results.length-1].address_components[0].short_name.toLowerCase();
-      if(gMaps.cache[countryCode]) {
-        callback(gMaps.cache[countryCode]);
-      }
-      else {
-        $.get("https://restcountries.eu/rest/v1/alpha/" + countryCode)
-          .done(function(data) {
-
-            data.borders = data.borders.map(function(alpha3Code) {
-              return gMaps.alpha3CodeConverter(alpha3Code);
-            });
-            gMaps.cache[countryCode] = data;
-            callback(data);
-          });
-      }
+      callback(results[results.length-1].address_components[0].short_name.toLowerCase());
+    } else {
+      callback(false);
     }
   });
 }
 
-gMaps.updatePlayer = function(alpha2Code){
-  gMaps.players[gMaps.playerIndex].countries.push(alpha2Code);
-  console.log("player " + gMaps.playerIndex+ " countries "  + gMaps.players[gMaps.playerIndex].countries);
-  console.log("starting country list" + gMaps.startingCountries);
-  gMaps.call = "2";
-  gMaps.highlightPlayerLayer(gMaps.players[gMaps.playerIndex].countries, gMaps.players[gMaps.playerIndex].color);
+gMaps.getNeighbours = function(data) {
+  var neighbours = data.borders.map(function(alpha3Code) {
+    return gMaps.alpha3CodeConverter(alpha3Code);
+  });
+
 }
 
-gMaps.highlightPlayerLayer = function (countries, color){
-  this.tablesLayer = this.getTablesLayer(countries, color);
-}
+<<<<<<< HEAD
+// get the neighbours country informations (short_name at the moment)
+=======
+>>>>>>> development
+gMaps.getCountryData = function(latLng, callback) {
+  console.log("country click");
+  gMaps.geocoder.geocode({ location: latLng }, function(results, status) {
 
+    if(status === "OK") {
+      var country = results[results.length-1].address_components[0];
+      console.log(country);
+      $.get("https://restcountries.eu/rest/v1/alpha/" + country.short_name.toLowerCase())
 
-gMaps.updateStartingCountriesLayer = function(e) {
-  gMaps.getCountryData(e.latLng, function(data) {
-    // gMaps.players[gMaps.playerIndex].countries.push(data.alpha2Code);
-
-
-    gMaps.startingCountries = gMaps.startingCountries.filter(function(countryCode) {
-      return countryCode !== data.alpha2Code
-    });
-
-   gMaps.updatePlayer(data.alpha2Code);
-
-    gMaps.startingCountriesLayer.setMap(null);
-    gMaps.startingCountriesLayer = gMaps.getTablesLayer(gMaps.startingCountries, '#0000ff');
-    gMaps.startingCountriesLayer.addListener('click', gMaps.updateStartingCountriesLayer);
-    // update player index
-    // remove alpha2Code from starting Countries array (indexOf + splice/slice)
-    // create a tablesLayer for player 1, with color (red/blue)
-    // recreate tablesLayer for starting countries
+        .done(function(data) {
+        
+          // callback(data);
+        });
+    }
   });
 }
-
-gMaps.startingCountriesLayer.addListener('click', gMaps.updateStartingCountriesLayer);
 
 // gMaps.map.addListener('click', function(e) {
 //   gMaps.getCountryData(e.latLng, gMaps.getNeighbours);
 // });
 
+
+gMaps.createNeighbourMarkers = function(marker) {
+
+  var country = _.findWhere(this.cache, { countryCode: marker.id });
+  var neighbours = country.borders.map(function(countryCode) {
+    return _.findWhere(gMaps.cache, { countryCode: countryCode });
+  });
+
+  neighbours.forEach(function(data) {
+    gMaps.geocoder.geocode({ address: data.name }, function(results, status) {
+      var location = results[0].geometry.location;
+
+      var contentString = '<div id="infoWinContent">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading">'+data.name+'</h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>Capital</b>'+data.capital+'</p>'+
+            '<p><b>Population</b>'+data.population+'</p>'+
+            '<p><b>Area</b>'+data.area+'</p>'+
+            '</div>'+
+            '</div>';
+
+      var infowindow = new google.maps.InfoWindow({
+                content: contentString
+              });
+
+      var marker = new google.maps.Marker({
+        position: location,
+        map: gMaps.map,
+        id: data.countryCode,
+        icon: "http://localhost:3000/images/tank-icon/EEC900/" + data.name
+      });
+
+
+
+      marker.addListener('mouseover', function() {
+                infowindow.open(map, marker);
+              });
+      marker.addListener('mouseout', function() {
+          infowindow.close();
+      });
+
+      // marker.addListener('click', function() {
+      //   var player = gMaps.players[gMaps.playerIndex];
+      //   player.countryMarkers.push(this);
+      //   this.setIcon("http://localhost:3000/images/tank-icon/" + player.color + "/" + data.population);
+      //   google.maps.event.clearListeners(this, 'click');
+
+      //   gMaps.playerIndex += 1;
+      //   if(gMaps.playerIndex >= gMaps.players.length) {
+      //     gMaps.playerIndex = 0;
+      //   }
+
+      //   gMaps.startingCountries = gMaps.startingCountries.filter(function(startingCountryCode) {
+      //     return startingCountryCode !== countryCode 
+      //   });
+
+      //   if(gMaps.startingCountries.length === 0) {
+      //     gMaps.addAttackEvents();
+      //   }
+      // });
+
+    });
+  })
+} 
+
+gMaps.addAttackEvents = function() {
+  var player = gMaps.players[gMaps.playerIndex];
+
+  player.countryMarkers.forEach(function(marker) {
+    marker.addListener('click', function() {
+      console.log("clicked");
+      gMaps.createNeighbourMarkers(this);
+    });
+  });
+}
+
+gMaps.setupStartingCountry = function() {
+  // this.startingCountries.forEach(function(countryCode) {
+
+    // var data = _.findWhere(gMaps.cache, { countryCode: countryCode });
+    var data = gMaps.cache[Math.ceil(Math.random()*gMaps.cache.length+1)]
+
+    gMaps.geocoder.geocode({ address: data.name }, function(results, status) {
+      var location = results[0].geometry.location;
+
+      var marker = new google.maps.Marker({
+        position: location,
+        map: gMaps.map,
+        id: data.countryCode,
+        icon: "http://localhost:3000/images/tank-icon/EEC900/" + data.name
+      });
+
+      marker.addListener('click', function() {
+        var player = gMaps.players[gMaps.playerIndex];
+        player.countryMarkers.push(this);
+        this.setIcon("http://localhost:3000/images/tank-icon/" + player.color + "/" + data.name);
+        google.maps.event.clearListeners(this, 'click');
+
+        // gMaps.playerIndex += 1;
+        // if(gMaps.playerIndex >= gMaps.players.length) {
+        //   gMaps.playerIndex = 0;
+        // }
+
+        // gMaps.startingCountries = gMaps.startingCountries.filter(function(startingCountryCode) {
+        //   return startingCountryCode !== countryCode 
+        // });
+
+        if(gMaps.startingCountries.length === 0) {
+          gMaps.addAttackEvents();
+        }
+      });
+
+    });
+  // });
+}
+
+gMaps.init = function() {
+  this.setupStartingCountry();
+}
+
+$.get("https://restcountries.eu/rest/v1/all")
+
+.done(function(data) {
+    console.log(data.length);
+    data.forEach(function(countryData) {
+      var country = {
+        borders: countryData.borders.map(function(alpha3Code) {
+          return gMaps.alpha3CodeConverter(alpha3Code);
+        }),
+        population: countryData.population,
+        name: countryData.name,
+        countryCode: countryData.alpha2Code,
+        area: countryData.area,
+        capital: countryData.capital
+      };
+
+      gMaps.cache.push(country);
+      console.log(country);
+
+    });
+
+  gMaps.init();
+});
+
+// gMaps.map.addListener('click', function(e) {
+//   gMaps.getCountryData(e.latLng, gMaps.getNeighbours);
+// });
