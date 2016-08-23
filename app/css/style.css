@@ -10,9 +10,26 @@ html, body, main {
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 50;
 }
 
 .navbar {
   z-index: 100;
   position: relative;
+}
+
+#question-box{
+  height: 100px;
+  width: 100px;
+  z-index: 200;
+}
+
+.flag-box{
+  height: 50%;
+  width: 50%;
+}
+
+.captial{
+  height: 50%;
+  width: 50%;
 }
