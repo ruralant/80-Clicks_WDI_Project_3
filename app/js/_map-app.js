@@ -282,6 +282,7 @@ gMaps.createNeighbourMarkers = function(marker) {
 
     });
   })
+ })
 } 
 
 gMaps.addAttackEvents = function() {
