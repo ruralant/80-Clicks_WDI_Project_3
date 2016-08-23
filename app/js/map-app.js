@@ -217,7 +217,8 @@ gMaps.createNeighbourMarkers = function(marker) {
   var neighbourMarkers = [];
 
   neighbours.forEach(function(data) {
-    gMaps.geocoder.geocode({ address: data.name + ", " + data.region }, function(results, status) {
+    console.log(data.name);
+    gMaps.geocoder.geocode({ address: data.name, componentRestrictions: { country: data.name } }, function(results, status) {
       var location = results[0].geometry.location;
 
       var contentString = '<div id="infoWinContent">\
@@ -279,12 +280,12 @@ gMaps.createNeighbourMarkers = function(marker) {
 
 gMaps.setupStartingCountry = function() {
 
-  var data = _.findWhere(gMaps.cache, { alpha2Code: 'GB' });
+  var data = _.findWhere(gMaps.cache, { alpha2Code: 'JP' });
 
   console.log(data);
   var pinImage = gMaps.getPinImage('D47E1A');
 
-  gMaps.geocoder.geocode({ address: data.name + ', ' + data.region }, function(results, status) {
+  gMaps.geocoder.geocode({ address: data.name, componentRestrictions: { country: data.name } }, function(results, status) {
     var marker = new google.maps.Marker({
       position: results[0].geometry.location,
       map: gMaps.map,
