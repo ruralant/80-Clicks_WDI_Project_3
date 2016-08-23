@@ -160,13 +160,46 @@ gMaps.getNeighbours = function(data) {
   var neighbours = data.borders.map(function(alpha3Code) {
     return gMaps.alpha3CodeConverter(alpha3Code);
   });
-
 }
 
-<<<<<<< HEAD
-// get the neighbours country informations (short_name at the moment)
-=======
->>>>>>> development
+gMaps.checkBorders = function(country) {
+  excpetions = {
+    GB: ["FRA", "BEL", "NLD", "ISL"],
+    FR: ["GBR"],
+    BE: ["GBR"],
+    ND: ["GBR"],
+    IS: ["GBR","CAN", "NOR"],
+    CAN: ["ISL"],
+    NOR: ["ISL"],
+    US: ["RUS", "JPN"],
+    RUS: ["JPN", "USA"],
+    JP: ["USA", "RUS", "PRK", "KOR"],
+    KP: ["JPN"],
+    KR: ["JPN"],
+    CY: ["LI", "TUR", "LBN"],
+    IL: ["CYP"],
+    TR: ["CYP"],
+    LB: ["CYP"],
+    BRAS: ["ANGOLA"],
+    AO: ["BRA"],
+    BR: ["AGO"],
+    CL: ["NZL"],
+    NZ: ["CHL", "AUS"],
+    AU: ["NZL", "PNG", "IDN"],
+    PG: ["AUS"],
+    ID: ["PNG", "AUS", "PHL", "MYS", "SXM"],
+    SX: ["IDN"],
+    PH:  ["IDN", "MYS", "VNM"],
+    MY: ["PHL"],
+    VN: ["PHL"]
+  }
+  if(country.alpha2Code in excpetions) {
+    country.borders = country.borders.concat(excpetions[country.alpha2Code]);
+    console.log(country);
+  }
+  return country;
+}
+
 gMaps.getCountryData = function(latLng, callback) {
   console.log("country click");
   gMaps.geocoder.geocode({ location: latLng }, function(results, status) {
