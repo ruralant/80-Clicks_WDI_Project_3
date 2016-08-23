@@ -197,6 +197,27 @@ gMaps.getAlpha2Code = function(latLng, callback) {
     }
   });
 }
+  
+var flagCounter= 0
+
+gMaps.createFlagsList = function(questionCountry,flagCounter) {
+  var flagBox = document.getElementById('flag-container');
+
+  console.log("flag");
+  flagBox.innerHTML +=
+    "<div id='question-box "+ questionCountry.alpha2Code +"'>\
+    <p>Capital:</p>\
+    <div class='capital'></div>\
+    <div class='flag-box'>\
+    <img src='"+"/images/svg/" + questionCountry.alpha2Code.toLowerCase() + ".svg' alt='flag image'></div></div>";
+  var capital = document.getElementsByClassName('capital');
+  flagBox.getElementsByClassName("capital")[flagCounter].textContent = questionCountry.capital; 
+  
+  // this.addEventListener ("click", function(e) {
+  //   document.getElementById("")
+  // }
+
+}
 
 
 gMaps.createNeighbourMarkers = function(marker) {
@@ -209,12 +230,10 @@ gMaps.createNeighbourMarkers = function(marker) {
 
   var questionCountry = neighbours[Math.floor(Math.random()*neighbours.length)];
 
-  var flagBox = document.getElementById('flag-box');
-  flagBox.innerHTML = "<img src='"+"/images/svg/" + questionCountry.alpha2Code.toLowerCase() + ".svg' alt='flag image'>";
-  var capital = document.getElementById('capital');
-  capital.textContent = questionCountry.capital; 
-
+  
+  
   var neighbourMarkers = [];
+  var neighbourCounter= 0;
 
   neighbours.forEach(function(data) {
     console.log(data.name);
@@ -223,7 +242,7 @@ gMaps.createNeighbourMarkers = function(marker) {
 
       var contentString = '<div id="infoWinContent">\
             <h1 id="firstHeading" class="firstHeading">'+data.name+'</h1>\
-            <div id="bodyContent">\
+            <div id="bodyContent" class="col-sm-4">\
               <p><b>Population</b>'+data.population+'</p>\
               <p><b>Area</b>'+data.area+'</p>\
             </div>\
@@ -233,6 +252,10 @@ gMaps.createNeighbourMarkers = function(marker) {
         content: contentString,
         disableAutoPan: true
       });
+
+      gMaps.createFlagsList(data, neighbourCounter);
+      neighbourCounter +=1;
+      
 
       var marker = new google.maps.Marker({
         position: location,
@@ -280,7 +303,7 @@ gMaps.createNeighbourMarkers = function(marker) {
 
 gMaps.setupStartingCountry = function() {
 
-  var data = _.findWhere(gMaps.cache, { alpha2Code: 'JP' });
+  var data = _.findWhere(gMaps.cache, { alpha2Code: 'AT' });
 
   console.log(data);
   var pinImage = gMaps.getPinImage('D47E1A');
