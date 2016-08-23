@@ -6,7 +6,7 @@ html, body, main {
 
 #map {
   height: 100%;
-  position: relative;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -17,7 +17,7 @@ html, body, main {
   margin-bottom: -2px;
   border: none;
   z-index: 10;
-  position: absolute;
+  position: relative;
 }
 
 
@@ -26,7 +26,7 @@ html, body, main {
   width: 100px;
   border: 1px solid black;
   padding: 2px;
-  position: absolute;
+  position: relative;
   z-index: 10;
   top: 10%;
   right: 90%;
