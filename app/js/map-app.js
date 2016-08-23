@@ -168,9 +168,9 @@ gMaps.geocoder = new google.maps.Geocoder();
 
 gMaps.map = new google.maps.Map(document.getElementById('map'), {
   center: gMaps.initialCenterPoint,
-  zoom: 3,
-  maxZoom: 5,
-  minZoom:2
+  zoom: 5,
+  maxZoom: 6,
+  minZoom: 4
 });
 
 
@@ -199,14 +199,12 @@ gMaps.getCountryCode = function(latLng, callback) {
 }
 
 
-
-
-
 gMaps.getNeighbours = function(data) {
   var neighbours = data.borders.map(function(alpha3Code) {
     return gMaps.alpha3CodeConverter(alpha3Code);
   });
 }
+
 
 gMaps.getCountryData = function(latLng, callback) {
   console.log("country click");
@@ -224,8 +222,6 @@ gMaps.getCountryData = function(latLng, callback) {
     }
   });
 }
-
-
 
 
 gMaps.createNeighbourMarkers = function(marker) {
@@ -279,8 +275,6 @@ gMaps.createNeighbourMarkers = function(marker) {
         icon: pinImage
       });
 
-
-
         marker.addListener('mouseover', function() {
             infowindow.open(map, marker);
         });
@@ -305,6 +299,7 @@ gMaps.createNeighbourMarkers = function(marker) {
     }) 
 }
 
+// questionNeighbour.capital
 
  gMaps.setupStartingCountry = function() {
    // this.startingCountries.forEach(function(countryCode) {
@@ -355,12 +350,10 @@ $.get("https://restcountries.eu/rest/v1/all")
         capital: countryData.capital
       };
 
-      gMaps.cache.push(country);
-     
+      gMaps.cache.push(country);   
 
     });
 
   gMaps.init();
 });
-
 

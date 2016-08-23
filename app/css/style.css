@@ -26,28 +26,30 @@ html, body, main {
   width: 100%;
 }
 
-
 #question-box {
-  height: 100px;
-  width: 100px;
-  border: 1px solid black;
-  padding: 2px;
+  background-color: white;
+  height: 200px;
+  width: 200px;
+  padding: 3px;
   position: absolute;
+  top: 10%;
   right: 5%;
   bottom: 0%;
+  text-align: center;
+  overflow: hidden;
 }
 
 #flag-box{
-  height: 50%;
-  width: 50%;
+  margin: 2px auto;
+  /*height: 90%;*/
+  width: 90%; 
 }
 #flag-box img{
-  width:90%;
+  width:100%;
 }
 
 #capital{
-  height: 50%;
-  width: 50%;
+  width: 100%;
 }
 
 #homepage {
