@@ -6,33 +6,38 @@ html, body, main {
 
 #map {
   height: 100%;
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 50;
+  z-index: 1;
 }
 
 .navbar {
   margin-bottom: -2px;
   border: none;
-  z-index: 100;
-  position: relative;
+  z-index: 10;
+  position: absolute;
 }
 
 
-#question-box{
+#question-box {
   height: 100px;
   width: 100px;
-  z-index: 200;
+  border: 1px solid black;
+  padding: 2px;
+  position: absolute;
+  z-index: 10;
+  top: 10%;
+  right: 90%;
 }
 
-.flag-box{
+#flag-box{
   height: 50%;
   width: 50%;
 }
 
-.captial{
+#captial{
   height: 50%;
   width: 50%;
 }
@@ -91,4 +96,3 @@ html, body, main {
 .forms {
   margin-top: 2%;
   font-weight: 300;
->>>>>>> development
