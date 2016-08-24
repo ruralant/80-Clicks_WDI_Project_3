@@ -175,7 +175,6 @@ gMaps.map = new google.maps.Map(document.getElementById('map'), {
   maxZoom: 5,
   minZoom: 2,
   disableDefaultUI: true,
-  scrollwheel: false,
   styles: [{
       "elementType": "labels",
       "stylers": [{ "visibility": "off" }]
