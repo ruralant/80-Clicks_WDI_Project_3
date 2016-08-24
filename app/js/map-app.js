@@ -213,7 +213,7 @@ var flagCounter= 0
 gMaps.createFlag = function(questionCountry) {
   var flagContainer = document.getElementById('flag-container');
   var questionBox = document.createElement('DIV');
-
+  var newCountry;
   questionBox.id = questionCountry.alpha2Code.toLowerCase();
   questionBox.classList.add("question-box");
   questionBox.onclick = function() {
@@ -226,7 +226,7 @@ gMaps.createFlag = function(questionCountry) {
       console.log(marker.id,questionCountry.alpha2Code);
        if (marker.id === questionCountry.alpha2Code){
          marker.setIcon(gMaps.getPinImage('D47E1A'));
-         player.countryMarkers.push(this.id);
+         player.countryMarkers.push(marker.id);
         newCountry = marker
        }
          else if (marker.id != questionCountry.alpha2Code)  {
@@ -234,9 +234,10 @@ gMaps.createFlag = function(questionCountry) {
          }     
         });
        
-        questionBox.innerHTML = "";
+        flagContainer.innerHTML = "";
         neighbourMarkers = [];
-
+        console.log("newCountry",newCountry) ;
+        console.log("player array",player.countryMarkers);
         gMaps.createNeighbourMarkers(newCountry);
   
       }; 
@@ -287,15 +288,16 @@ gMaps.createNeighbourMarkers = function(marker) {
         disableAutoPan: true
       });
 
-      gMaps.createFlag(data);    
+      gMaps.createFlag(data);
 
+      if  (player.countryMarkers.indexOf(data.alpha2Code,0)=== -1){
       var marker = new google.maps.Marker({
         position: location,
         map: gMaps.map,
         id: data.alpha2Code,
         icon: gMaps.getPinImage('000000')
 
-      });
+      });}
 
       neighbourMarkers.push(marker);
 
