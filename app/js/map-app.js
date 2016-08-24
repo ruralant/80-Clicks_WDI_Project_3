@@ -215,23 +215,19 @@ gMaps.geocoder = new google.maps.Geocoder();
 
 gMaps.map = new google.maps.Map(document.getElementById('map'), {
   center: gMaps.initialCenterPoint,
-
   zoom: 3,
   maxZoom: 5,
   minZoom: 2,
   disableDefaultUI: true,
-  featureType: "adminsitrative",
-  elementType: "labels",
-  scrollwheel: false,
-  stylers:[{
-    visibility: "off"
-  }]
-
+  styles: [{
+      "elementType": "labels",
+      "stylers": [{ "visibility": "off" }]
+    }],
 });
+
 
 var neighbourMarkers = [];
 var currentNeighbours =[];
-
 
 
 gMaps.getPinImage = function(color){
@@ -256,11 +252,13 @@ gMaps.getAlpha2Code = function(latLng, callback) {
 var flagCounter= 0
 
 gMaps.createFlag = function(questionCountry) {
-  var flagContainer = document.getElementById('flag-container');
+  var flagContainer = document.getElementById('card-deck');
   var questionBox = document.createElement('DIV');
   var newCountry;
   questionBox.id = questionCountry.alpha2Code.toLowerCase();
   questionBox.classList.add("question-box");
+  questionBox.classList.add("card");
+  // questionBox.classList.add("col-md-6");
 
   questionBox.onclick = function() {
     console.log(questionCountry);
@@ -301,11 +299,11 @@ gMaps.createFlag = function(questionCountry) {
     
   
 
-  questionBox.innerHTML = "<p>Capital:</p>\
-    <div class='capital'>" + questionCountry.capital + "</div>\
-    <div class='flag-box'>\
-      <img src='"+"/images/svg/" + questionCountry.alpha2Code.toLowerCase() + ".svg' alt='flag image'>\
-    </div>";
+  questionBox.innerHTML = "<img class='card-img-top' src='"+"/images/svg/" + questionCountry.alpha2Code.toLowerCase() + ".svg' alt='Card image cap'>\
+        <div class='card-block'>\
+          <h4 class='capital'>" + questionCountry.capital + "</h4>\
+        </div>";
+
 
   flagContainer.appendChild(questionBox);
 
@@ -341,8 +339,6 @@ gMaps.createNeighbourMarkers = function(marker) {
   });
 
 
-  
-  
   
 
   neighbours.forEach(function(data) {
@@ -445,4 +441,3 @@ $.get("https://restcountries.eu/rest/v1/all").done(function(data) {
 
   gMaps.init();
 });
-
