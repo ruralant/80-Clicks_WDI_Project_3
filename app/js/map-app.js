@@ -169,14 +169,15 @@ gMaps.geocoder = new google.maps.Geocoder();
 
 gMaps.map = new google.maps.Map(document.getElementById('map'), {
   center: gMaps.initialCenterPoint,
-
   zoom: 3,
   maxZoom: 5,
   minZoom: 2,
-  disableDefaultUI: true
-
-});
-
+  disableDefaultUI: true,
+  styles: [{
+      "elementType": "labels",
+      "stylers": [{ "visibility": "off" }]
+    }],
+})
 
 
 gMaps.getPinImage = function(color){
