@@ -162,6 +162,8 @@ gMaps.players = [{
   countryMarkers: []
 }];
 
+var player = gMaps.players[gMaps.playerIndex];
+
 //gMap initial setup (central point, initial zoom level)
 gMaps.initialCenterPoint = { lat: 51.478972,  lng: -0.122068  };
 
@@ -173,11 +175,15 @@ gMaps.map = new google.maps.Map(document.getElementById('map'), {
   maxZoom: 5,
   minZoom: 2,
   disableDefaultUI: true,
+  scrollwheel: false,
   styles: [{
       "elementType": "labels",
       "stylers": [{ "visibility": "off" }]
     }],
-})
+});
+
+
+var neighbourMarkers = [];
 
 
 gMaps.getPinImage = function(color){
@@ -201,28 +207,55 @@ gMaps.getAlpha2Code = function(latLng, callback) {
   
 var flagCounter= 0
 
-gMaps.createFlagsList = function(questionCountry,flagCounter) {
-  var flagBox = document.getElementById('flag-container');
+gMaps.createFlag = function(questionCountry) {
+  var flagContainer = document.getElementById('card-deck');
+  var questionBox = document.createElement('DIV');
 
-  console.log("flag");
-  flagBox.innerHTML +=
-    "<div id='question-box "+ questionCountry.alpha2Code +"'>\
-    <p>Capital:</p>\
-    <div class='capital'></div>\
-    <div class='flag-box'>\
-    <img src='"+"/images/svg/" + questionCountry.alpha2Code.toLowerCase() + ".svg' alt='flag image'></div></div>";
-  var capital = document.getElementsByClassName('capital');
-  flagBox.getElementsByClassName("capital")[flagCounter].textContent = questionCountry.capital; 
+  questionBox.id = questionCountry.alpha2Code.toLowerCase();
+  questionBox.classList.add("question-box");
+  questionBox.classList.add("card");
+  questionBox.classList.add("col-md-6");
+  questionBox.onclick = function() {
+    console.log(questionCountry);
+    console.log(neighbourMarkers);
+
+   
+     neighbourMarkers.forEach  (function(marker){
+      console.log(neighbourMarkers);
+      console.log(marker.id,questionCountry.alpha2Code);
+       if (marker.id === questionCountry.alpha2Code){
+         marker.setIcon(gMaps.getPinImage('D47E1A'));
+         player.countryMarkers.push(this.id);
+        newCountry = marker
+       }
+         else if (marker.id != questionCountry.alpha2Code)  {
+           marker.setMap(null);
+         }     
+        });
+       
+        questionBox.innerHTML = "";
+        neighbourMarkers = [];
+
+        gMaps.createNeighbourMarkers(newCountry);
   
-  // this.addEventListener ("click", function(e) {
-  //   document.getElementById("")
-  // }
+      }; 
+      // google.maps.event.clearListeners(this, 'click');   
+    
+  
+
+  questionBox.innerHTML = "<img class='card-img-top' src='"+"/images/svg/" + questionCountry.alpha2Code.toLowerCase() + ".svg' alt='Card image cap'>\
+        <div class='card-block'>\
+          <h4 class='capital'>" + questionCountry.capital + "</h4>\
+        </div>";
+
+
+  flagContainer.appendChild(questionBox);
 
 }
 
 
 gMaps.createNeighbourMarkers = function(marker) {
-  var player = gMaps.players[gMaps.playerIndex];
+ 
   var country = _.findWhere(this.cache, { alpha2Code: marker.id });
   console.log(country);
   var neighbours = country.borders.filter(function(country) {
@@ -232,9 +265,6 @@ gMaps.createNeighbourMarkers = function(marker) {
   var questionCountry = neighbours[Math.floor(Math.random()*neighbours.length)];
 
   
-  
-  var neighbourMarkers = [];
-  var neighbourCounter= 0;
 
   neighbours.forEach(function(data) {
     console.log(data.name);
@@ -254,15 +284,14 @@ gMaps.createNeighbourMarkers = function(marker) {
         disableAutoPan: true
       });
 
-      gMaps.createFlagsList(data, neighbourCounter);
-      neighbourCounter +=1;
-      
+      gMaps.createFlag(data);    
 
       var marker = new google.maps.Marker({
         position: location,
         map: gMaps.map,
         id: data.alpha2Code,
-        icon: gMaps.getPinImage('cb65cb')
+        icon: gMaps.getPinImage('000000')
+
       });
 
       neighbourMarkers.push(marker);
@@ -276,26 +305,7 @@ gMaps.createNeighbourMarkers = function(marker) {
         infowindow.close();
       });
 
-      marker.addListener('click', function() {
-
-        if (this.id === questionCountry.alpha2Code){
-
-          marker.setIcon(gMaps.getPinImage('D47E1A'));
-          player.countryMarkers.push(this.id);
-
-          neighbourMarkers.forEach(function(marker) {
-            if (marker.id != questionCountry.alpha2Code){
-              marker.setMap(null);
-            }
-          });
-
-          neighbourMarkers = [];
-
-          gMaps.createNeighbourMarkers(this);
-        }
-
-        google.maps.event.clearListeners(this, 'click');   
-      });
+     
     });
   }); 
 }
@@ -349,4 +359,3 @@ $.get("https://restcountries.eu/rest/v1/all").done(function(data) {
 
   gMaps.init();
 });
-
