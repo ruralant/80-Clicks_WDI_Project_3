@@ -4,6 +4,8 @@ gMaps.cache = [];
 
 var currentRound = 0;
 var occupiedCountries=[];
+var startLatLng;
+var endLatLng;
 
 // convert the alpha3 codes in alpha2 codes slicing the last letter apart for the following exceptions. 
 gMaps.alpha3CodeConverter = function(alpha3Code) {
@@ -169,14 +171,16 @@ gMaps.players = [{
   countryMarkers: [],
   continent:[],
   score:0,
-  lastCountryPlayed:""
+  lastCountryPlayed:"",
+  lastLatLng:[]
 },{
   name:"Two",
   color: "1E41A6",
   countryMarkers: [],
   continent:[],
   score:0,
-  lastCountryPlayed:""
+  lastCountryPlayed:"",
+  lastLatLng:[]
 }];
 
 var player = gMaps.players[gMaps.playerIndex];
@@ -235,7 +239,29 @@ gMaps.createFlag = function(questionCountry) {
   // questionBox.classList.add("col-md-6");
 
   questionBox.onclick = function() {
-    gMaps.checkForLoose(currentNeighbours);
+    gMaps.checkForLose(currentNeighbours);
+    console.log("questionCountry",questionCountry);
+    if(currentRound>2){
+    startLatLng = player.lastLatLng};
+
+    player.lastLatLng = questionCountry.latlng
+
+    console.log("color player", player.color);
+    var color="#"+player.color;
+    var line = new google.maps.Polyline({
+        path: [
+            new google.maps.LatLng(startLatLng[0], startLatLng[1]), 
+            new google.maps.LatLng(player.lastLatLng[0], player.lastLatLng[1])
+        ],
+
+        strokeColor: color,
+        strokeOpacity: 1.0,
+        strokeWeight: 5,
+        map: gMaps.map
+    });
+
+
+
 
     if(neighbourMarkers===0){
       alert("end of game");
@@ -309,7 +335,7 @@ gMaps.createFlag = function(questionCountry) {
 }
 
 
-gMaps.checkForLoose = function(){
+gMaps.checkForLose = function(){
 
 
   console.log("currentNeighbours",currentNeighbours)
@@ -321,7 +347,7 @@ gMaps.checkForLoose = function(){
   currentNeighbours=[];
 
   if (player.score >80 ){
-    alert("More Than 80 Clicks You Loose");
+    alert("More Than 80 Clicks You Lose");
   }
   else if (availableNeighbours.length===0){
     alert("You are land locked you loose");
@@ -418,6 +444,8 @@ gMaps.setupStartingCountry = function() {
   console.log(data);
   console.log(player.color);
 
+  startLatLng = data.latlng;
+
   if (gMaps.playerIndex===0){
   var pinImage = gMaps.getPinImage('cb65cb');
     }
@@ -433,6 +461,8 @@ gMaps.setupStartingCountry = function() {
       icon: pinImage,
       return: data.region
     });
+
+    console.log("marker",marker);
 
     marker.addListener('click', function() {
       var player = gMaps.players[gMaps.playerIndex];
