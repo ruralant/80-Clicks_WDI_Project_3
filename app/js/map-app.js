@@ -214,7 +214,7 @@ gMaps.createFlag = function(questionCountry) {
   questionBox.id = questionCountry.alpha2Code.toLowerCase();
   questionBox.classList.add("question-box");
   questionBox.classList.add("card");
-  questionBox.classList.add("col-md-6");
+  // questionBox.classList.add("col-md-6");
   questionBox.onclick = function() {
     console.log(questionCountry);
     console.log(neighbourMarkers);
@@ -314,7 +314,7 @@ gMaps.createNeighbourMarkers = function(marker) {
 
 gMaps.setupStartingCountry = function() {
 
-  var data = _.findWhere(gMaps.cache, { alpha2Code: 'AT' });
+  var data = _.findWhere(gMaps.cache, { alpha2Code: 'RU' });
 
   console.log(data);
   var pinImage = gMaps.getPinImage('D47E1A');

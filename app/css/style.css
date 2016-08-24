@@ -39,10 +39,10 @@ html, body, main {
 }*/
 
 #card-deck-wrapper {
-  width: 200px;
+  width: 80%;
   position: absolute;
   top: 12%;
-  right: 3%;
+  left: 10%;
  /* display: inline-block;*/
 /*  float:  left;
   clear: both; */
@@ -57,6 +57,10 @@ html, body, main {
 
 .card {
   padding: 0.2rem;
+  display: inline-block;
+  float: left;
+  width: 6rem;
+  margin: 0.3rem 0.3rem;
 }
 
 .card-block {
