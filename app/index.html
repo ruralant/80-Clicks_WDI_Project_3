@@ -44,45 +44,48 @@
   </nav>
 
   <div class="splash-screen">
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">80 Clicks</a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <nav class="navbar navbar-light bg-faded navbar-fixed-top">
+        <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">
+          &#9776;
+        </button>
+        <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
+          <a class="navbar-brand" href="#">Logo</a>
           <ul class="nav navbar-nav">
-            <li ><a href="#" data-template="" class="logged-in"> Logged in as <%= user.username %></a></li>
-            <li><a href="#" data-template="login" class="logged-out">Sign In</a></li>
-            <li><a href="#" data-template="register" class="logged-out">Sign Up</a></li>
-            <li><a href="#" class="logout logged-in">Logout</a></li>
+            <li class="nav-item active">
+            <li class="nav-item">
+              <a class="nav-link logged-in" href="#" data-template="">Logged in as <%= user.username %</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link logged-out" href="#" data-template="login">Sign In</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link logged-out" href="#" data-template="register">Sign Up</a>
+            </li>
+            <li class="nav-item pull-xs-right ">
+              <a class="logout logged-in btn btn-danger" href="#">Logout</a>
+            </li>
           </ul>
         </div>
-      </div>
-    </nav>
+      </nav>
+
     <div class="container-flat">
       <div id="homepage">
         <div id="intro">
           <div class="centered">
-            <h1>80 Clicks</h1>    
-            <p>Conquer the world, one state at a time!</p>
-              <a href="#" data-template="" class="logged-in">"Register"</a>
-              <a href="#" data-template="" class="logged-in">"Play!"</a>
+            <h1>Around the World in 80 Clicks</h1>    
+            <p>Fun with Capitals and Flags</p>
+              <a href="#" data-template="" class="btn btn-secondary">Sign Up</a>
+              <a href="#" data-template="" class="btn btn-primary">Play!</a>
           </div>
         </div>
 
         <div class="row">
           <div class="col-md-6" id="home_2_column">
-            <img src="/public/images/marker.png" alt="tank icon">
+            <img src="/images/map.png" alt="tank icon">
             <p>Pick a country, give the right answer and travel all round the world</p>
           </div>
           <div class="col-md-6" id="home_2_column">
-            <img src="/public/images/globe.png" alt="rpg icon">
+            <img src="/images/globe.png" alt="rpg icon">
             <p>The world is a book and those who do not travel read only one page</p>
           </div>
         </div>
@@ -97,18 +100,18 @@
         </p>
 
         <div class="row">
-          <h4>The Game</h4>
+          <h4>Features</h4>
           <div class="col-md-4" id="home_3_column">
-            <img src="/public/images/map-example.png" alt="game board screenshot" class="img-circle">
-            <p>Your Army</p>
+            <p>Follow your Journey</p>
+            <img src="/images/gameUX.png" alt="game board screenshot" class="img-circle">
           </div>
           <div class="col-md-4" id="home_3_column">
-            <img src="/public/images/map-example.png" alt="army screenshot" class="img-circle">
-            <p>Factions</p>    
+            <p>Block your Opponent</p> 
+            <img src="/images/gameUX.png" alt="army screenshot" class="img-circle">   
           </div>
           <div class="col-md-4" id="home_3_column">
-            <img src="/public/images/map-example.png" alt="leaderboard screenshot" class="img-circle">
-            <p>LeaderBoard</p>
+            <p>Your Highest Score</p>
+            <img src="/images/gameUX.png" alt="leaderboard screenshot" class="img-circle">
           </div>
         </div>
         <hr>
