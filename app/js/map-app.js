@@ -183,6 +183,10 @@ gMaps.createFlag = function(questionCountry) {
         
         occupiedCountries.push(marker.id);
         gMaps.player.lastCountryPlayed = gMaps.neighbourMarkers.splice(idx,1)[0];
+
+        console.log("mikeys magic",gMaps.neighbourMarkers.splice(idx,1)[0]);
+        console.log("lastcountry played after mike magic",gMaps.player.lastCountryPlayed);
+
         gMaps.player.lastCountryPlayed.setMap(gMaps.map);
       }
       else if (marker.id != questionCountry.alpha2Code)  {
@@ -301,7 +305,9 @@ gMaps.createNeighbourMarkers = function(marker) {
     }
   });
 
+  if (currentRound >1){
   gMaps.map.panTo(gMaps.player.lastCountryPlayed.getPosition());
+  };
  
 }
 
