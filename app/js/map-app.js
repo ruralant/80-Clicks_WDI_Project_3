@@ -6,6 +6,7 @@ var currentRound = 0;
 var occupiedCountries=[];
 var startLatLng;
 var endLatLng;
+var winFlag = false;
 
 gMaps.checkBorders = function(country) {
   exceptions = {
@@ -86,7 +87,8 @@ gMaps.players = [{
   continent:[],
   score:0,
   lastCountryPlayed:"",
-  lastLatLng:[]
+  lastLatLng:[],
+  km:0
 },{
   name:"Two",
   color: "0000FF",
@@ -95,7 +97,8 @@ gMaps.players = [{
   continent:[],
   score:0,
   lastCountryPlayed:"",
-  lastLatLng:[]
+  lastLatLng:[],
+  km:0
 }];
 
 gMaps.player = gMaps.players[gMaps.playerIndex];
@@ -140,6 +143,8 @@ gMaps.getPinImage = function(color){
 
 // var flagCounter= 0
 
+
+
 gMaps.createFlag = function(questionCountry) {
   var flagContainer = document.getElementById('card-deck');
   var questionBox = document.createElement('DIV');
@@ -150,11 +155,15 @@ gMaps.createFlag = function(questionCountry) {
 
   questionBox.onclick = function() {
 
+
     if(currentRound > 1) {
       startLatLng = gMaps.player.lastLatLng
     }
 
     gMaps.player.lastLatLng = questionCountry.latlng
+
+
+    console.log("Player country markers",gMaps.player.countryMarkers);
 
     var line = new google.maps.Polyline({
       path: [
@@ -168,9 +177,33 @@ gMaps.createFlag = function(questionCountry) {
       map: gMaps.map
     });
 
+
+    function deg2rad(deg) {
+     return deg * (Math.PI/180)
+    };
+
+    var R = 6371; 
+    var dLat = deg2rad(gMaps.player.lastLatLng[0]-startLatLng[0]);  // deg2rad below
+    var dLon = deg2rad(gMaps.player.lastLatLng[1]-startLatLng[1]); 
+    var a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(deg2rad(startLatLng[0])) * Math.cos(deg2rad(gMaps.player.lastLatLng[0])) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2)
+      ; 
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    var d = R * c; 
+    d = Math.floor(d);
+    gMaps.player.km +=d;
+    console.log("distance",gMaps.player.km);
+
     if(gMaps.neighbourMarkers.length === 0){
+      player1.style.display = "block";
+      player2.style.display = "block";
+      winFlag = true;
       alert("end of game");
     }
+
+
 
     gMaps.neighbourMarkers.forEach(function(marker, idx){
       if (marker.id === questionCountry.alpha2Code){
@@ -212,6 +245,50 @@ gMaps.createFlag = function(questionCountry) {
     else {
       gMaps.createNeighbourMarkers(gMaps.player.lastCountryPlayed);
     }
+
+   
+    // var elements = document.getElementsByClassName('nav-item');
+
+    // console.log("swap", elements);
+    // console.log("swap player",gMaps.playerIndex);
+        
+    // for(i=0; i < elements.length; i++){
+    //   if(i===gMaps.playerIndex){
+    //   elements[i].add('.active');
+    //     }
+    //   else{
+    //   elements[i].remove('.active');
+    //   }
+      
+    // }
+
+
+    //var elements = document.getElementsByClassName('nav-item player');
+    var player1 = document.getElementById('player1');
+    var player2 = document.getElementById('player2');
+    console.log(player1);
+    console.log(player2);
+    // console.log("swap player",gMaps.playerIndex);
+    
+    var scoreDisplay = document.getElementById('p'+gMaps.playerIndex+'score');
+    scoreDisplay.innerHTML = ' '+gMaps.player.score+' point(s) '+gMaps.player.km+'km'+'<img src="/images/'+(gMaps.player.continent.length+1)+'continent.png" alt="cheeseindicator">';
+
+
+    if(winFlag === false){
+      if (player1.style.display == ""  ){
+        player1.style.display = "none";
+        player2.style.display = "block";
+      } 
+      else if (player1.style.display =="none"){
+        player1.style.display = "block";
+        player2.style.display = "none";
+      }
+      else if (player1.style.display =="block"){
+        player1.style.display = "none";
+        player2.style.display = "block";
+      }
+    };
+
    
   }      
 
@@ -232,10 +309,18 @@ gMaps.checkForLose = function(){
   gMaps.currentNeighbours = [];
 
   if (gMaps.player.score > 80 ){
+    player1.style.display = "block";
+    player2.style.display = "block";
+    winFlag = true;
     alert("More Than 80 Clicks You Lose");
+   
   }
   else if (availableNeighbours.length===0){
+    player1.style.display = "block";
+    player2.style.display = "block";
+    winFlag = true;
     alert("You are land locked you loose");
+    
   }
  
 }
@@ -262,6 +347,9 @@ gMaps.createNeighbourMarkers = function(marker) {
   });
   
   if (neighbours.length === 0 ){
+    player1.style.display = "block";
+    player2.style.display = "block";
+    winFlag = true;
     alert("Player "+gMaps.player.name+" you loose");
   }
 
@@ -327,6 +415,7 @@ gMaps.setupStartingCountry = function() {
   });
 
   gMaps.createNeighbourMarkers(marker);
+  gMaps.player.countryMarkers.push(marker.id);
 
   // marker.addListener('click', function() {
   //   gMaps.player = gMaps.players[gMaps.playerIndex];
