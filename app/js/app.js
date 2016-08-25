@@ -95,6 +95,10 @@ EmpireApp.initEventHandlers = function() {
   this.$main = $("main");
   this.$main.on("submit", "form", this.handleForm);
 
+  $(".splash-screen button").on('click', function() {
+    $(this).parents('.splash-screen').addClass('hidden');
+  });
+
   $(".navbar-nav a").not(".logout").on("click", this.loadPage);
   $(".navbar-nav a.logout").on("click", this.logout);
   this.$main.on("focus", "form input", function(){
@@ -105,7 +109,6 @@ EmpireApp.initEventHandlers = function() {
 EmpireApp.init = function(){
   this.initEventHandlers();
   this.updateUI();
-  this.getTemplate('gameboard');
 }.bind(EmpireApp);
 
 
