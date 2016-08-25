@@ -23,21 +23,12 @@ main.active {
   z-index: 1040;
 }
 
-#map {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  width: 100%;
+ul li {
+  padding: -3%;
+  list-style-type:none;
 }
 
-#card-deck-wrapper {
-  width: 95%;
-  position: absolute;
-  top: 1%;
-  left: 5%;
-}
+
 
 .navbar-fixed-top {
  box-shadow: 0 8px 6px -6px #998;
@@ -69,6 +60,22 @@ main.active {
 .card img {
   width:100%;
   height: 5rem;
+}
+
+.centered h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  font-family: 'Raleway', sans-serif;
+}
+
+.centered p {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+.forms {
+  margin-top: 2%;
+  font-weight: 300;
 }
 
 #homepage {
@@ -117,25 +124,21 @@ main.active {
   margin: 5% auto;
   width: 30%
 }
-.centered h1 {
-  font-size: 4rem;
-  font-weight: 800;
-  font-family: 'Raleway', sans-serif;
+
+#map {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
-.centered p {
-  font-size: 1.5rem;
-  font-weight: 300;
-}
-
-ul li {
-  padding: -3%;
-  list-style-type:none;
-}
-
-.forms {
-  margin-top: 2%;
-  font-weight: 300;
+#card-deck-wrapper {
+  width: 95%;
+  position: absolute;
+  top: 1%;
+  left: 5%;
 }
 
 #player1 {
@@ -146,9 +149,13 @@ ul li {
   display: none;
 }
 
+#winning-popup {
+  width: 50%;
+  height: 50%;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+}
 
-
-
-
-
-
+#continentIndicator {
+  width: 1rem;
+}

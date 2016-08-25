@@ -271,7 +271,7 @@ gMaps.createFlag = function(questionCountry) {
     // console.log("swap player",gMaps.playerIndex);
     
     var scoreDisplay = document.getElementById('p'+gMaps.playerIndex+'score');
-    scoreDisplay.innerHTML = ' '+gMaps.player.score+' point(s) '+gMaps.player.km+'km'+'<img src="/images/'+(gMaps.player.continent.length+1)+'continent.png" alt="cheeseindicator">';
+    scoreDisplay.innerHTML = ' '+gMaps.player.score+' point(s) '+gMaps.player.km+'km'+'<img src="/images/'+(gMaps.player.continent.length+1)+'continent.png" id="continentIndicator" alt="cheeseindicator">';
 
 
     if(winFlag === false){
@@ -345,7 +345,11 @@ gMaps.createNeighbourMarkers = function(marker) {
       neighbours.push(data);
     }
   });
-  
+
+  if(neighbours.indexOf(('gb').toUpperCase)>-1 && gMaps.player.continent.length === 4 ){
+    alert(gMaps.player.name+" you win");
+  }
+
   if (neighbours.length === 0 ){
     player1.style.display = "block";
     player2.style.display = "block";
