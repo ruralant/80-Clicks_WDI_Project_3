@@ -29,9 +29,9 @@ gMaps.checkBorders = function(country) {
     FR: ["GBR"],
     FJ: ["AUS", "USA"],
     FK: ["ARG", "URY"],
-    GB: ["FRA", "ISL"],
+    GB: ["FRA", "ISL", "NOR"],
     GI: ["ESP", "MAR"],
-    GL: ["ISL", "CAN"],
+    GL: ["ISL", "CAN", "GBR"],
     HT: ["CUB"],
     HK: ["PHL"],
     ID: ["PNG", "AUS"],
@@ -162,9 +162,6 @@ gMaps.createFlag = function(questionCountry) {
 
     gMaps.player.lastLatLng = questionCountry.latlng
 
-
-    console.log("Player country markers",gMaps.player.countryMarkers);
-
     var line = new google.maps.Polyline({
       path: [
         new google.maps.LatLng(startLatLng[0], startLatLng[1]), 
@@ -194,7 +191,6 @@ gMaps.createFlag = function(questionCountry) {
     var d = R * c; 
     d = Math.floor(d);
     gMaps.player.km +=d;
-    console.log("distance",gMaps.player.km);
 
     if(gMaps.neighbourMarkers.length === 0){
       player1.style.display = "block";
@@ -215,9 +211,6 @@ gMaps.createFlag = function(questionCountry) {
         
         occupiedCountries.push(marker.id);
         gMaps.player.lastCountryPlayed = gMaps.neighbourMarkers.splice(idx,1)[0];
-
-        console.log("mikeys magic",gMaps.neighbourMarkers.splice(idx,1)[0]);
-        console.log("lastcountry played after mike magic",gMaps.player.lastCountryPlayed);
 
         gMaps.player.lastCountryPlayed.setMap(gMaps.map);
       }
@@ -246,32 +239,13 @@ gMaps.createFlag = function(questionCountry) {
       gMaps.createNeighbourMarkers(gMaps.player.lastCountryPlayed);
     }
 
-   
-    // var elements = document.getElementsByClassName('nav-item');
-
-    // console.log("swap", elements);
-    // console.log("swap player",gMaps.playerIndex);
-        
-    // for(i=0; i < elements.length; i++){
-    //   if(i===gMaps.playerIndex){
-    //   elements[i].add('.active');
-    //     }
-    //   else{
-    //   elements[i].remove('.active');
-    //   }
-      
-    // }
-
 
     //var elements = document.getElementsByClassName('nav-item player');
     var player1 = document.getElementById('player1');
     var player2 = document.getElementById('player2');
-    console.log(player1);
-    console.log(player2);
-    // console.log("swap player",gMaps.playerIndex);
     
     var scoreDisplay = document.getElementById('p'+gMaps.playerIndex+'score');
-    scoreDisplay.innerHTML = ' '+gMaps.player.score+' point(s) '+gMaps.player.km+'km'+'<img src="/images/'+(gMaps.player.continent.length+1)+'continent.png" alt="cheeseindicator">';
+    scoreDisplay.innerHTML = ' '+gMaps.player.score+' point(s) '+gMaps.player.km+'km'+'<img src="/images/'+(gMaps.player.continent.length+1)+'continent.png" id="continentIndicator" alt="cheeseindicator">';
 
 
     if(winFlag === false){
@@ -345,7 +319,11 @@ gMaps.createNeighbourMarkers = function(marker) {
       neighbours.push(data);
     }
   });
-  
+
+  if(country.borders.indexOf(gMaps.startingCountry) !== -1 && gMaps.player.continent.length > 3){
+    alert("YOU WIN!"); 
+  }  
+
   if (neighbours.length === 0 ){
     player1.style.display = "block";
     player2.style.display = "block";
@@ -393,8 +371,8 @@ gMaps.createNeighbourMarkers = function(marker) {
   });
 
   if (currentRound >1){
-  gMaps.map.panTo(gMaps.player.lastCountryPlayed.getPosition());
-  };
+    gMaps.map.panTo(gMaps.player.lastCountryPlayed.getPosition());
+  }
  
 }
 
@@ -403,6 +381,7 @@ gMaps.createNeighbourMarkers = function(marker) {
 gMaps.setupStartingCountry = function() {
 
   var data = _.findWhere(gMaps.cache, { alpha2Code: 'GB' });
+  gMaps.startingCountry = data;
 
   startLatLng = data.latlng;
 

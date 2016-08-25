@@ -1,10 +1,5 @@
-
 @import 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,700';
 @import 'https://fonts.googleapis.com/css?family=Raleway:100,200,400,700';
-
-.hidden {
-  display: none!important;
-}
 
 html {
   font-family: 'Roboto', sans-serif;
@@ -16,29 +11,24 @@ html, body, main {
   margin: 0;
 }
 
-.splash-screen {
+main {
   position: absolute;
   width: 100%;
   min-height: 100%;
-  z-index: 1040;
+  z-index: -1;
   background: #fff;
 }
 
-#map {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  width: 100%;
+main.active {
+  z-index: 1040;
 }
 
-#card-deck-wrapper {
-  width: 95%;
-  position: absolute;
-  top: 1%;
-  left: 5%;
+ul li {
+  padding: -3%;
+  list-style-type:none;
 }
+
+
 
 .navbar-fixed-top {
  box-shadow: 0 8px 6px -6px #998;
@@ -72,10 +62,30 @@ html, body, main {
   height: 5rem;
 }
 
+.centered h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  font-family: 'Raleway', sans-serif;
+}
+
+.centered p {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+.forms {
+  margin-top: 2%;
+  font-weight: 300;
+}
+
 #homepage {
   text-align: center;
   width: auto;
   z-index: 10;
+}
+
+#homepage {
+  background-color: #fff;
 }
 
 #intro {
@@ -114,25 +124,21 @@ html, body, main {
   margin: 5% auto;
   width: 30%
 }
-.centered h1 {
-  font-size: 4rem;
-  font-weight: 800;
-  font-family: 'Raleway', sans-serif;
+
+#map {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
-.centered p {
-  font-size: 1.5rem;
-  font-weight: 300;
-}
-
-ul li {
-  padding: -3%;
-  list-style-type:none;
-}
-
-.forms {
-  margin-top: 2%;
-  font-weight: 300;
+#card-deck-wrapper {
+  width: 95%;
+  position: absolute;
+  top: 1%;
+  left: 5%;
 }
 
 #player1 {
@@ -143,9 +149,13 @@ ul li {
   display: none;
 }
 
+#winning-popup {
+  width: 50%;
+  height: 50%;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+}
 
-
-
-
-
-
+#continentIndicator {
+  width: 1rem;
+}
