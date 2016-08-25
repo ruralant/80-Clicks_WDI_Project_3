@@ -2,7 +2,7 @@ console.log("JS linked!")
 
 var EmpireApp = EmpireApp || {};
 
-EmpireApp.API_URL = "http://localhost:3000/api";
+EmpireApp.API_URL = "/api";
 
 EmpireApp.setRequestHeader = function(jqXHR) {
   var token = window.localStorage.getItem("token");
