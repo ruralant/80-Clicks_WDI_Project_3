@@ -10,10 +10,11 @@ EmpireApp.setRequestHeader = function(jqXHR) {
 }
 
 EmpireApp.getTemplate = function(template, data) {
-  return $.get('/templates/' + template + '.html').done(function(templateHtml) {
+  return $.get('./templates/' + template + '.html').done(function(templateHtml) {
     var html = _.template(templateHtml)(data);
     EmpireApp.$main.html(html);
     EmpireApp.updateUI();
+
   });
 }
 
@@ -50,7 +51,7 @@ EmpireApp.handleForm = function(){
     if(!!data.token){
       window.localStorage.setItem("token", data.token);
     }
-    EmpireApp.getTemplate("gameboard", {user: data});
+    EmpireApp.$main.removeClass('active');
   })
 
   .fail(EmpireApp.handleFormErrors);
@@ -73,10 +74,12 @@ EmpireApp.logout = function(){
   EmpireApp.updateUI();
 }
 
-EmpireApp.updateUI = function() {
-  var loggedIn = !!window.localStorage.getItem("token");
+EmpireApp.isLoggedIn = function() {
+  return !!window.localStorage.getItem("token");
+}
 
-  if(loggedIn) {
+EmpireApp.updateUI = function() {
+  if(EmpireApp.isLoggedIn()) {
     $('.logged-in').removeClass("hidden");
     $('.logged-out').addClass("hidden");
   } else {
@@ -87,7 +90,6 @@ EmpireApp.updateUI = function() {
 
 EmpireApp.loadPage = function(){
   event.preventDefault();
-  console.log("page load")
   EmpireApp.getTemplate($(this).data('template'));
 }
 
@@ -95,11 +97,18 @@ EmpireApp.initEventHandlers = function() {
   this.$main = $("main");
   this.$main.on("submit", "form", this.handleForm);
 
-  $(".splash-screen button").on('click', function() {
-    $(this).parents('.splash-screen').addClass('hidden');
+  this.$main.on('click', '#play', function() {
+    event.preventDefault();
+
+    if(EmpireApp.isLoggedIn()) {
+      EmpireApp.$main.removeClass('active');
+    } else {
+      EmpireApp.getTemplate('login');
+    }
   });
 
   $(".navbar-nav a").not(".logout").on("click", this.loadPage);
+  this.$main.on("click", ".accessButton", this.loadPage);
   $(".navbar-nav a.logout").on("click", this.logout);
   this.$main.on("focus", "form input", function(){
     $(this).parents('.form-group').removeClass('has-error');
@@ -108,6 +117,7 @@ EmpireApp.initEventHandlers = function() {
 
 EmpireApp.init = function(){
   this.initEventHandlers();
+  this.getTemplate('splash');
   this.updateUI();
 }.bind(EmpireApp);
 

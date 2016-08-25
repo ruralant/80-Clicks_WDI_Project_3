@@ -1,10 +1,5 @@
-
 @import 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,700';
 @import 'https://fonts.googleapis.com/css?family=Raleway:100,200,400,700';
-
-.hidden {
-  display: none!important;
-}
 
 html {
   font-family: 'Roboto', sans-serif;
@@ -16,12 +11,16 @@ html, body, main {
   margin: 0;
 }
 
-.splash-screen {
+main {
   position: absolute;
   width: 100%;
   min-height: 100%;
-  z-index: 1040;
+  z-index: -1;
   background: #fff;
+}
+
+main.active {
+  z-index: 1040;
 }
 
 #map {
@@ -76,6 +75,10 @@ html, body, main {
   text-align: center;
   width: auto;
   z-index: 10;
+}
+
+#homepage {
+  background-color: #fff;
 }
 
 #intro {
