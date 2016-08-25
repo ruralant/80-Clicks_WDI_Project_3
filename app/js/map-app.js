@@ -2,116 +2,10 @@ var gMaps = gMaps || {};
 
 gMaps.cache = [];
 
-// convert the alpha3 codes in alpha2 codes slicing the last letter apart for the following exceptions. 
-gMaps.alpha3CodeConverter = function(alpha3Code) {
-  var execptions = {
-    ALA: "AX",
-    AND: "AD",
-    AGO: "AO",
-    ATG: "AG",
-    ARM: "AM",
-    ABW: "AW",
-    ARE: "AE",
-    ATF: "TF",
-    AUT: "AT",
-    BHS: "BS",
-    BGD: "BD",
-    BRB: "BB",
-    BLR: "BY",
-    BLZ: "BZ",
-    BEN: "BJ",
-    BES: "BQ",
-    BIH: "BA",
-    BRN: "BN",
-    BDI: "BI",
-    CPV: "CV",
-    CYM: "KY",
-    CAF: "CF",
-    CHL: "CL",
-    CHN: "CN",
-    COM: "KM",
-    COG: "CG",
-    COD: "CD",
-    COK: "CK",
-    CUW: "CW",
-    DNK: "DK",
-    EST: "EE",
-    ESH: "EH",
-    FLK: "FK",
-    FRO: "FO",
-    FSM: "FM",
-    GNQ: "GQ",
-    GUF: "GF",
-    GRL: "GL",
-    GRD: "GD",
-    GLP: "GP",
-    GIN: "GN",
-    GNB: "GW",
-    GUY: "GY",
-    IRQ: "IQ",
-    IRL: "IE",
-    ISR: "IL",
-    JAM: "JM",
-    KAZ: "KZ",
-    KOS: "XK",
-    KOR: "KR",
-    LBR: "LR",
-    LBY: "LY",
-    MAC: "MO",
-    MAF: "MF",
-    MDG: "MG",
-    MDV: "MV",
-    MLT: "MT",
-    MTQ: "MQ",
-    MOZ: "MZ",
-    MYT: "YT",
-    MEX: "MX",
-    MNE: "ME",
-    MOZ: "MZ",
-    MNP: "MP",
-    NIU: "NU",
-    PAK: "PK",
-    PLW: "PW",
-    PNG: "PG",
-    PCN: "PN",
-    POL: "PL",
-    PRY: "PY",
-    PRK: "KP",
-    PRT: "PT",
-    PAK: "PK",
-    PYF: "PF",
-    SYC: "SC",
-    SEN: "SN",
-    SLV: "SV",
-    SVK: "SK",
-    SVN: "SI",
-    SLB: "SB",
-    SGS: "GS",
-    SUR: "SR",
-    SWZ: "SZ",
-    SWE: "SE",    
-    SPM: "PM",
-    SRB: "RS",
-    SWZ: "SZ",
-    TCD: "TD",
-    TKM: "TM",
-    TUN: "TN",
-    TON: "TO",
-    TUR: "TR",
-    TUV: "TV",
-    UKR: "UA",
-    URY: "UY",
-    VGB: "VG",
-    WLF: "WF",
-  }
-
-  if(alpha3Code in execptions) {
-    return execptions[alpha3Code];
-  }
-  else {
-    return alpha3Code.slice(0, -1);
-  }
-}
+var currentRound = 0;
+var occupiedCountries=[];
+var startLatLng;
+var endLatLng;
 
 gMaps.checkBorders = function(country) {
   exceptions = {
@@ -186,23 +80,32 @@ gMaps.checkBorders = function(country) {
 gMaps.playerIndex = 0;
 
 gMaps.players = [{
-  color: "D43D1A",
+  name:"One",
+  color: "FF0000",
+  neighbourColor: "AA0000",
   countryMarkers: [],
   continent:[],
-  score:0
+  score:0,
+  lastCountryPlayed:"",
+  lastLatLng:[]
 },{
-  color: "1E41A6",
+  name:"Two",
+  color: "0000FF",
+  neighbourColor: '0000AA',
   countryMarkers: [],
   continent:[],
-  score:0
+  score:0,
+  lastCountryPlayed:"",
+  lastLatLng:[]
 }];
 
-var player = gMaps.players[gMaps.playerIndex];
+gMaps.player = gMaps.players[gMaps.playerIndex];
 
 //gMap initial setup (central point, initial zoom level)
 gMaps.initialCenterPoint = { lat: 51.478972,  lng: -0.122068  };
 
-// gMaps.geocoder = new google.maps.Geocoder();
+gMaps.neighbourMarkers = [];
+gMaps.currentNeighbours = [];
 
 gMaps.map = new google.maps.Map(document.getElementById('map'), {
   center: gMaps.initialCenterPoint,
@@ -216,11 +119,6 @@ gMaps.map = new google.maps.Map(document.getElementById('map'), {
     }],
 });
 
-
-var neighbourMarkers = [];
-var currentNeighbours =[];
-
-
 gMaps.getPinImage = function(color){
   var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + color,
     new google.maps.Size(21, 34),
@@ -229,7 +127,6 @@ gMaps.getPinImage = function(color){
   );
   return pinImage;
 };
-
 
 // gMaps.getAlpha2Code = function(latLng, callback) {
 //   gMaps.geocoder.geocode({ location: latLng }, function(results, status) {
@@ -244,66 +141,95 @@ gMaps.getPinImage = function(color){
 
 // var flagCounter= 0
 
-
 gMaps.createFlag = function(questionCountry) {
   var flagContainer = document.getElementById('card-deck');
   var questionBox = document.createElement('DIV');
-  var newCountry;
+  
   questionBox.id = questionCountry.alpha2Code.toLowerCase();
   questionBox.classList.add("question-box");
   questionBox.classList.add("card");
-  // questionBox.classList.add("col-md-6");
 
   questionBox.onclick = function() {
 
-    neighbourMarkers.forEach(function(marker){
+    if(currentRound > 1) {
+      startLatLng = gMaps.player.lastLatLng
+    }
 
+    gMaps.player.lastLatLng = questionCountry.latlng
+
+    var line = new google.maps.Polyline({
+      path: [
+        new google.maps.LatLng(startLatLng[0], startLatLng[1]), 
+        new google.maps.LatLng(gMaps.player.lastLatLng[0], gMaps.player.lastLatLng[1])
+      ],
+
+      strokeColor: "#"+gMaps.player.color,
+      strokeOpacity: 1.0,
+      strokeWeight: 5,
+      map: gMaps.map
+    });
+
+    if(gMaps.neighbourMarkers.length === 0){
+      alert("end of game");
+    }
+
+    gMaps.neighbourMarkers.forEach(function(marker, idx){
       if (marker.id === questionCountry.alpha2Code){
-        marker.setIcon(gMaps.getPinImage('D47E1A'));
-        player.countryMarkers.push(marker.id);
-        newCountry = marker
+        
+        var colorCode = gMaps.playerIndex===0 ? 'D43D1A' : '1E416A';
 
-        gMaps.map.panTo(marker.getPosition());
+        marker.setIcon(gMaps.getPinImage(colorCode));
+        gMaps.player.countryMarkers.push(marker.id);
+        
+        occupiedCountries.push(marker.id);
+        gMaps.player.lastCountryPlayed = gMaps.neighbourMarkers.splice(idx,1)[0];
+        gMaps.player.lastCountryPlayed.setMap(gMaps.map);
       }
       else if (marker.id != questionCountry.alpha2Code)  {
         marker.setMap(null);
       }     
     });
-
-    if (player.continent.indexOf(questionCountry.region,0)===-1){
-      player.continent.push(questionCountry.region);
+        
+    if (gMaps.player.continent.indexOf(questionCountry.region,0)===-1){
+      gMaps.player.continent.push(questionCountry.region);
     }
 
     flagContainer.innerHTML = "";
-    player.score +=1;
-    
-    neighbourMarkers = [];
-    gMaps.createNeighbourMarkers(newCountry);
+    gMaps.player.score +=1;
+
+    currentRound+=1;
+
+    gMaps.playerIndex+=1;
+    if(gMaps.playerIndex > gMaps.players.length-1) gMaps.playerIndex = 0;
+    gMaps.player = gMaps.players[gMaps.playerIndex];
+
+    if(currentRound===1){
+      gMaps.setupStartingCountry();
+    }
+    else {
+      gMaps.createNeighbourMarkers(gMaps.player.lastCountryPlayed);
+    }
    
-  };      
+  }      
 
   questionBox.innerHTML = "<img class='card-img-top' src='"+"/images/svg/" + questionCountry.alpha2Code.toLowerCase() + ".svg' alt='Card image cap'>\
         <div class='card-block'>\
           <h4 class='capital'>" + questionCountry.capital + "</h4>\
         </div>";
 
-
   flagContainer.appendChild(questionBox);
-
 }
 
+gMaps.checkForLose = function(){
 
-gMaps.checkForLoose = function(){
-
-  console.log("currentNeighbours",currentNeighbours)
-  availableNeighbours= currentNeighbours.filter(function(el){
-    return !player.countryMarkers.includes(el);
+  availableNeighbours = gMaps.currentNeighbours.filter(function(el){
+    return !gMaps.player.countryMarkers.includes(el);
   });
 
-  currentNeighbours = [];
+  gMaps.currentNeighbours = [];
 
-  if (player.score >80 ){
-    alert("More Than 80 Clicks You Loose");
+  if (gMaps.player.score > 80 ){
+    alert("More Than 80 Clicks You Lose");
   }
   else if (availableNeighbours.length===0){
     alert("You are land locked you loose");
@@ -313,15 +239,31 @@ gMaps.checkForLoose = function(){
 
 
 gMaps.createNeighbourMarkers = function(marker) {
-  
-  var country = _.findWhere(this.cache, { alpha2Code: marker.id });
-  var neighbours = country.borders.filter(function(country) {
-    return player.countryMarkers.indexOf(country.alpha2Code) === -1
+
+  gMaps.neighbourMarkers.forEach(function(marker) {
+    marker.setMap(null);
   });
+
+  gMaps.neighbourMarkers = [];
+
+  var neighbours = [];
+  var country = _.findWhere(this.cache, { alpha2Code: marker.id });
+  var possibleNeighbours = country.borders.filter(function(country) {
+    return gMaps.player.countryMarkers.indexOf(country.alpha2Code) === -1
+  });
+
+  possibleNeighbours.forEach(function(data){
+    if (occupiedCountries.indexOf(data.alpha2Code,0)===-1){
+      neighbours.push(data);
+    }
+  });
+  
+  if (neighbours.length === 0 ){
+    alert("Player "+gMaps.player.name+" you loose");
+  }
 
   neighbours.forEach(function(data) {
     var location = new google.maps.LatLng(data.latlng[0], data.latlng[1]);
-
     var contentString = '<div id="infoWinContent">\
           <h1 id="firstHeading" class="firstHeading">'+data.name+'</h1>\
           <div id="bodyContent" class="col-sm-4">\
@@ -336,31 +278,30 @@ gMaps.createNeighbourMarkers = function(marker) {
     });
 
     gMaps.createFlag(data);
-    var image = './images/red-passport.png'
-    if(player.countryMarkers.indexOf(data.alpha2Code,0)=== -1){
+
+    if(gMaps.player.countryMarkers.indexOf(data.alpha2Code,0) === -1){
       var marker = new google.maps.Marker({
         position: location,
         map: gMaps.map,
         id: data.alpha2Code,
-        icon: image
+        icon: gMaps.getPinImage(gMaps.player.neighbourColor)
       });
-    }
 
-    neighbourMarkers.push(marker);
-    currentNeighbours.push(data.alpha2Code);
-
-    marker.addListener('mouseover', function() {
-      infowindow.open(map, marker);
-    });
-      
+      marker.addListener('mouseover', function() {
+        infowindow.open(map, marker);
+      });
         
-    marker.addListener('mouseout', function() {
-      infowindow.close();
-    });
-  
+          
+      marker.addListener('mouseout', function() {
+        infowindow.close();
+      });
+
+      gMaps.neighbourMarkers.push(marker);
+      gMaps.currentNeighbours.push(data.alpha2Code);
+    }
   });
-  
- gMaps.checkForLoose(currentNeighbours);
+
+  gMaps.map.panTo(gMaps.player.lastCountryPlayed.getPosition());
  
 }
 
@@ -368,28 +309,28 @@ gMaps.createNeighbourMarkers = function(marker) {
 
 gMaps.setupStartingCountry = function() {
 
-  var data = _.findWhere(gMaps.cache, { alpha2Code: 'RU' });
+  var data = _.findWhere(gMaps.cache, { alpha2Code: 'GB' });
 
-  console.log(data);
-  var pinImage = gMaps.getPinImage('D47E1A');
+  startLatLng = data.latlng;
 
   var marker = new google.maps.Marker({
     position: new google.maps.LatLng(data.latlng[0], data.latlng[1]),
     map: gMaps.map,
     id: data.alpha2Code,
-    icon: pinImage,
+    icon: gMaps.getPinImage('000000'),
     return: data.region
   });
 
-  marker.addListener('click', function() {
-    var player = gMaps.players[gMaps.playerIndex];
-    player.countryMarkers.push(data.alpha2Code);
-    console.log("Player country array", player.countryMarkers);
-    this.setIcon(pinImage);
-    google.maps.event.clearListeners(this, 'click');
+  gMaps.createNeighbourMarkers(marker);
 
-    gMaps.createNeighbourMarkers(this);
-  });
+  // marker.addListener('click', function() {
+  //   gMaps.player = gMaps.players[gMaps.playerIndex];
+  //   gMaps.player.countryMarkers.push(data.alpha2Code);
+  //   this.setIcon(gMaps.getPinImage('000000'));
+  //   google.maps.event.clearListeners(this, 'click');
+
+    
+  // });
 }
 
 
