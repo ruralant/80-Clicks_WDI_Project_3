@@ -7,7 +7,6 @@ EmpireApp.API_URL = "http://localhost:3000/api";
 EmpireApp.setRequestHeader = function(jqXHR) {
   var token = window.localStorage.getItem("token");
   if(!!token) return jqXHR.setRequestHeader('Authorization', 'Bearer ' + token);
- 
 }
 
 EmpireApp.getTemplate = function(template, data) {
