@@ -24,7 +24,11 @@ html, body, main {
   left: 5%;
 }
 
-.navbar {
+.navbar-fixed-top {
+ box-shadow: 0 8px 6px -6px #999;
+}
+
+.navbar-fixed-bottom {
   box-shadow: 0 8px 6px 8px #999;
 }
 
@@ -57,7 +61,7 @@ html, body, main {
 }
 
 #intro {
-  background-image: url(/public/images/intro.jpg);
+  background-image: url(/images/intro2.jpg);
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
