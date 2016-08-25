@@ -45,7 +45,6 @@ gMaps.checkBorders = function(country) {
     KR: ["JPN", "AUS"],
     LB: ["CYP"],
     LK: ["AUS"],
-    ND: ["GBR"],
     NL: ["GBR"],
     NO: ["ISL"],
     NZ: ["CHL", "AUS"],
