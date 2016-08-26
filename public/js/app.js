@@ -70,8 +70,9 @@ EmpireApp.handleFormErrors = function(jqXHR){
 EmpireApp.logout = function(){
   event.preventDefault();
   window.localStorage.clear();
-  alert("thanks for playing");
+  console.log("logout");
   EmpireApp.updateUI();
+  this.getTemplate('splash');
 }
 
 EmpireApp.isLoggedIn = function() {
@@ -110,7 +111,8 @@ EmpireApp.initEventHandlers = function() {
 
   $(".navbar-nav a").not(".logout").on("click", this.loadPage);
   this.$main.on("click", ".accessButton", this.loadPage);
-  $(".navbar-nav a.logout").on("click", this.logout);
+  $("back btn btn-primary").on("click", this.logout);
+  $("logout logged-in btn btn-danger").on("click",window.localStorage.clear(), this.logout);
   this.$main.on("focus", "form input", function(){
     $(this).parents('.form-group').removeClass('has-error');
   })
