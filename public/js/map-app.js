@@ -395,15 +395,6 @@ gMaps.setupStartingCountry = function() {
 
   gMaps.createNeighbourMarkers(marker);
   gMaps.player.countryMarkers.push(marker.id);
-
-  // marker.addListener('click', function() {
-  //   gMaps.player = gMaps.players[gMaps.playerIndex];
-  //   gMaps.player.countryMarkers.push(data.alpha2Code);
-  //   this.setIcon(gMaps.getPinImage('000000'));
-  //   google.maps.event.clearListeners(this, 'click');
-
-    
-  // });
 }
 
 
