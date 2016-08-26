@@ -29,10 +29,6 @@ ul li {
   list-style-type:none;
 }
 
-/*form {
-  margin: 10% 25%;
-}*/
-
 .navbar-fixed-top {
  box-shadow: 0 8px 6px -6px #998;
  background-color: #FFFFFE;
@@ -177,12 +173,37 @@ ul li {
   font-weight: 700;
 }
 
-/*ß*/
-
 #subtitle {
   font-family: 'Montserrat', sans-serif;
 }
 
 #exCollapsingNavbar2 img {
   width: 2.2rem;
+}
+
+#chart {
+  position: fixed;
+  top: 75%;
+  margin-left: 85%;
+}
+
+#chart img {
+  width: 80%;
+  background-color: #FFFFFB;
+}
+
+#winnerBox {
+  font-family: 'Raleway', sans-serif;
+  width: 300px;
+  height: 100px;
+  display: none;
+  position: fixed;
+  background-color: #FFFFFB;
+  top: 40%;
+  left: 40%;
+}
+
+#winner {
+  margin-top: 11%;
+  margin-left: 5%;
 }

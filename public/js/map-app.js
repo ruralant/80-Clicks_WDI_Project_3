@@ -7,6 +7,7 @@ var occupiedCountries=[];
 var startLatLng;
 var endLatLng;
 var winFlag = false;
+var winType ="";
 
 gMaps.checkBorders = function(country) {
   exceptions = {
@@ -47,7 +48,7 @@ gMaps.checkBorders = function(country) {
     LB: ["CYP"],
     LK: ["AUS"],
     NL: ["GBR"],
-    NO: ["ISL"],
+    NO: ["ISL", "DNK"],
     NZ: ["CHL", "AUS"],
     MC: ["ITA", "TUN"],
     MO: ["HKG"],
@@ -143,7 +144,29 @@ gMaps.getPinImage = function(color){
 
 // var flagCounter= 0
 
-
+gMaps.winLose = function(winType){
+  
+  if(winType==="win"){
+    gMaps.player = gMaps.players[gMaps.playerIndex];
+  }
+  else{
+    if (gMaps.playerIndex===0){
+      gMaps.player = gMaps.players[1];
+    }
+    else{
+      gMaps.player = gMaps.players[0];
+    } 
+  }
+  var winnerName = document.getElementById('winner');
+  winnerName.innerHTML = '<h2> Player ' + gMaps.player.name + ' WINS!</h2>';
+  // var winnerKm = document.getElementById('winner-km');
+  // winnerKm.innerHTML = '<h4>Km ' + gMaps.player.km + ' travelled</h4>';
+  // var winnerContinents = document.getElementById('winner-continents');
+  // console.log("continent",gMaps.player.continent);
+  // winnerContinents.innerHTML = '<p> Continents ' + gMaps.player.continent.length + ' visisted</p>';
+  var winnerBox = document.getElementById('winnerBox');
+  winnerBox.style.display = "block";
+}
 
 gMaps.createFlag = function(questionCountry) {
   var flagContainer = document.getElementById('card-deck');
@@ -219,8 +242,8 @@ gMaps.createFlag = function(questionCountry) {
       }     
     });
         
-    if (gMaps.player.continent.indexOf(questionCountry.region,0)===-1){
-      gMaps.player.continent.push(questionCountry.region);
+    if (gMaps.players[gMaps.playerIndex].continent.indexOf(questionCountry.region,0)===-1){
+      gMaps.players[gMaps.playerIndex].continent.push(questionCountry.region);
     }
 
     flagContainer.innerHTML = "";
@@ -245,8 +268,10 @@ gMaps.createFlag = function(questionCountry) {
     var player2 = document.getElementById('player2');
     
     var scoreDisplay = document.getElementById('p'+gMaps.playerIndex+'score');
-    scoreDisplay.innerHTML = ' '+gMaps.player.score+' point(s) '+gMaps.player.km+'km'+'<img src="/images/'+(gMaps.player.continent.length+1)+'continent.png" id="continentIndicator" alt="cheeseindicator">';
+    scoreDisplay.innerHTML = ' '+gMaps.player.score+' point(s) '+gMaps.player.km+'km';
 
+    var chartDisplay = document.getElementById('chart');
+    chartDisplay.innerHTML = '<img src="/images/'+(gMaps.player.continent.length)+'continent.png" id="continentIndicator" class="img-rounded" alt="cheeseindicator">';
 
     if(winFlag === false){
       if (player1.style.display == ""  ){
@@ -261,9 +286,7 @@ gMaps.createFlag = function(questionCountry) {
         player1.style.display = "none";
         player2.style.display = "block";
       }
-    };
-
-   
+    };   
   }      
 
   questionBox.innerHTML = "<img class='card-img-top' src='"+"/images/svg/" + questionCountry.alpha2Code.toLowerCase() + ".svg' alt='Card image cap'>\
@@ -286,14 +309,15 @@ gMaps.checkForLose = function(){
     player1.style.display = "block";
     player2.style.display = "block";
     winFlag = true;
-    alert("More Than 80 Clicks You Lose");
-   
+    winType = "lose";
+    gMaps.winLose(winType);
   }
   else if (availableNeighbours.length===0){
     player1.style.display = "block";
     player2.style.display = "block";
     winFlag = true;
-    alert("You are land locked you loose");
+    winType = "lose";
+    gMaps.winLose(winType);
     
   }
  
@@ -321,14 +345,16 @@ gMaps.createNeighbourMarkers = function(marker) {
   });
 
   if(country.borders.indexOf(gMaps.startingCountry) !== -1 && gMaps.player.continent.length > 3){
-    alert("YOU WIN!"); 
+    winType = "win";
+    gMaps.winLose(winType);
   }  
 
   if (neighbours.length === 0 ){
     player1.style.display = "block";
     player2.style.display = "block";
     winFlag = true;
-    alert("Player "+gMaps.player.name+" you loose");
+    winType = "lose";
+    gMaps.winLose(winType);
   }
 
   neighbours.forEach(function(data) {
